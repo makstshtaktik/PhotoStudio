@@ -5,6 +5,9 @@ using namespace std
 #define REPORT_H
 
 class Report{
-
+protected: 
+int reportId;
+public:
+virtual string toString();
 };
-#endife
+#endif

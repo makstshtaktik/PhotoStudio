@@ -6,6 +6,9 @@ using namespace std
 #define FILMDEVELOPING_H
 
 class FilmDeveloping: Order{
-
+public:
+int filmLength;
+FilmDeveloping(int filmLength);
+string toString() override;
 };
 #endif
