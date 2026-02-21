@@ -1,6 +1,9 @@
+#pragma once
 #include <iostream>
+#include <memory>
+
 #include "Order.h"
-using namespace std
+using namespace std;
 
 #ifndef RECEPTIONIST_H
 #define RECEPTIONIST_H
@@ -13,7 +16,7 @@ public:
 int receptionistId;
 
 Receptionist(string name, string surname);
-void recordOrder(Order);
-string toString() override;
+void recordOrder(shared_ptr<Order> order);
+string toString();
 };
 #endif

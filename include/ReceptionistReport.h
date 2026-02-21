@@ -1,12 +1,14 @@
+#pragma once
 #include <iostream>
+#include <memory>
+#include <vector>
+
 #include "Report.h"
 #include "Order.h"
-using namespace std
+using namespace std;
 
 #ifndef RECEPTIONISTREPORT_H
 #define RECEPTIONISTREPORT_H
-
-std::vector<std::shared_ptr<Order>> orders;
 
 class ReceptionistReport: Report{
 public:

@@ -1,20 +1,22 @@
+#pragma once
 #include <iostream>
+#include <memory>
+#include <vector>
+
+#include "Consumables.h"
 #include "Report.h"
-#include "Order.h"
-using namespace std
-#ifndef REPORT_H
+using namespace std;
+#ifndef PHOTOGRAPHERREPORT_H
 
-#define REPORT_H
-
-std::vector<std::shared_ptr<Consumables>> consumables
+#define PHOTOGRAPHERREPORT_H
 
 class PhotographerReport: Report{
 public:
 int receptionistId;
-void consumablesUsed(std::vector<std::shared_ptr<Consumables>> consumables);
+string description;
 
 
-PhotographerReport(int photographerId, std::vector<std::shared_ptr<Consumables>> consumables);
+PhotographerReport(int photographerId, string description, std::vector<std::shared_ptr<Consumables>> consumables);
 string toString() override;
 };
 #endif

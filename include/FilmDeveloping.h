@@ -1,6 +1,7 @@
+#pragma once
 #include <iostream>
 #include "Order.h"
-using namespace std
+using namespace std;
 #ifndef FILMDEVELOPING_H
 
 #define FILMDEVELOPING_H

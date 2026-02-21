@@ -1,21 +1,23 @@
+#pragma once
 #include <iostream>
-#include 'Order.h'
+#include "Order.h"
 #ifndef CLIENT_H
 
 #define CLIENT_H
-using namespace std
+using namespace std;
 
 class Client{
-private: 
-string name;
+
+private:
+    string name;
 public:
 string surname;
 string email;
-int clientId;
 
-Client(string surname, string email);
+Client(string name, string surname, string email);
 string toString();
-Order createOrder();
+void createOrder();
 void payOrder(Order order);
+    string getName();
 };
 #endif

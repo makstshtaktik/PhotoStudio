@@ -1,23 +1,24 @@
+#pragma once
 #include <iostream>
-#include <ctime>
-using namespace std
+using namespace std;
 #ifndef ORDER_H
 
 #define ORDER_H
 
 
 class Order{
-private: 
+protected:
 int price;
 public:
+virtual ~Order() = default;
 int orderId;
 string orderDescription;
-bool isFinished;
-bool isUrgent;
+bool isFinished = false;
+bool isUrgent = false;
 time_t FinishTill;
 bool isPaid;
-
-Order(int orderDescription, int price, bool isFinished, bool isUrgent, time_t FinishTill, bool isPaid);
+    Order(string orderDescription);
+Order(string orderDescription, int price, bool isFinished, bool isUrgent, time_t FinishTill, bool isPaid);
 virtual string toString();
 int getPrice();
 };
