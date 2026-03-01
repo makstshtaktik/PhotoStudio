@@ -14,9 +14,10 @@ class PhotographerReport: Report{
 public:
 int receptionistId;
 string description;
+vector<Consumables*> consumables;
 
 
-PhotographerReport(int photographerId, string description, std::vector<std::shared_ptr<Consumables>> consumables);
+PhotographerReport(int photographerId, string description, std::vector<Consumables*> consumables);
 string toString() override;
 };
 #endif

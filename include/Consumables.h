@@ -2,6 +2,8 @@
 #include <iostream>
 #include <memory>
 #include <vector>
+
+#include "Repo.h"
 class Consumables;
 using namespace std;
 #ifndef CONSUMABLES_H
@@ -12,7 +14,8 @@ public:
 string name;
 int quantity;
 Consumables(string name, int quantity);
-void addConsumable(std::shared_ptr<Consumables> consumable);
-void removeConsumables();
+void addConsumable(Repo* repo, Consumables* consumable);
+void removeConsumables(Repo* repo);
+string toString();
 };
 #endif

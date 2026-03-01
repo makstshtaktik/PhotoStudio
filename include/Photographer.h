@@ -17,6 +17,6 @@ public:
 int photographerId;
 Photographer(string name, string surname);
 void performOrder(Order order);
-void useConsumables(std::vector<std::shared_ptr<Consumables>> consumables);
+void useConsumables(std::vector<Consumables* > consumables);
 };
 #endif

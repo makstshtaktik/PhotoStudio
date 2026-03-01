@@ -1,14 +1,14 @@
 #include "PhotographerReport.h"
+#include "Repo.h"
 using namespace std;
 
-PhotographerReport::PhotographerReport(int photographerId, string description, std::vector<std::shared_ptr<Consumables>> consumables) :
-    Report(reportId)
+PhotographerReport::PhotographerReport(int photographerId, string description, std::vector<Consumables *> consumables) :
+    Report(reportId), description(description), consumables(consumables)
 {
-    photographerId = photographerId;
-    description = description;
+
 }
 
 string PhotographerReport::toString()
 {
-    return "Report ID: " + to_string(reportId) + "Description: " + description;
+    return "Report ID: " + to_string(reportId) + "Description: " + description + "Consumables left: ";
 }

@@ -3,21 +3,25 @@
 //
 
 #include "Consumables.h"
+#include "Client.h"
+#include "Repo.h"
 using namespace std;
-
-vector<shared_ptr<Consumables>> consumables;
 
 Consumables::Consumables(string name, int quantity): name(name), quantity(quantity)
 {
 
 }
 
-void Consumables::addConsumable(std::shared_ptr<Consumables> consumable)
+void Consumables::addConsumable(Repo* repo, Consumables* consumable)
 {
-    consumables.push_back(consumable);
+    repo->consumables.push_back(consumable);
 }
 
-void Consumables::removeConsumables()
+void Consumables::removeConsumables(Repo* repo)
 {
-    consumables.erase(consumables.begin(), consumables.end());
+    repo->consumables.erase(repo->consumables.begin(), repo->consumables.end());
+}
+
+string Consumables::toString(){
+	return "Consumable: " + name + "of quantity: " + std::to_string(quantity);
 }

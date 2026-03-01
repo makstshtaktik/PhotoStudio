@@ -3,6 +3,7 @@
 #include <memory>
 
 #include "Order.h"
+#include "Repo.h"
 using namespace std;
 
 #ifndef RECEPTIONIST_H
@@ -16,7 +17,7 @@ public:
 int receptionistId;
 
 Receptionist(string name, string surname);
-void recordOrder(shared_ptr<Order> order);
+void recordOrder(Repo* repo, Order* order);
 string toString();
 };
 #endif

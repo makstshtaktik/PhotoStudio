@@ -1,29 +1,28 @@
 #include "ReceptionistReport.h"
+#include "Repo.h"
 
-vector<shared_ptr<Order>> orderlist;
-
-ReceptionistReport::ReceptionistReport(int receptionistId, std::vector<std::shared_ptr<Order>> orderlist) :
+ReceptionistReport::ReceptionistReport(int receptionistId, std::map<int, Order*> orders) :
     Report(reportId), receptionistId(receptionistId)
 {
 
 }
 
-void ReceptionistReport::ordersDone(std::vector<std::shared_ptr<Order>> orderlist)
+void ReceptionistReport::ordersDone(std::map<int, Order*> orders)
 {
-    for (auto order : orderlist)
+    for (auto const& [id, orderPtr] : orders)
     {
-        cout << order->toString() << endl;
+        cout << orderPtr->toString() << endl;
     }
 }
 
-int ReceptionistReport::calculateRevenue()
+int ReceptionistReport::calculateRevenue(std::map<int, Order*> orders)
 {
     int totalRevenue = 0;
-    for (auto order : orderlist)
+    for (auto const& [id, orderPtr] : orders)
     {
-        if (order->isPaid == true)
+        if (orderPtr->isPaid == true)
         {
-            totalRevenue += order->getPrice();
+            totalRevenue += orderPtr->getPrice();
         }
     }
     return totalRevenue;
@@ -31,5 +30,5 @@ int ReceptionistReport::calculateRevenue()
 
 string ReceptionistReport::toString()
 {
-    return "Receptionist Report: " + to_string(receptionistId);
+    return "Receptionist Report: " + to_string(receptionistId) + " Total revenue:" + to_string(calculateRevenue({}));
 }

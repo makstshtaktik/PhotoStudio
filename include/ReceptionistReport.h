@@ -2,6 +2,8 @@
 #include <iostream>
 #include <memory>
 #include <vector>
+#include <map>
+#include "Repo.h"
 
 #include "Report.h"
 #include "Order.h"
@@ -13,11 +15,12 @@ using namespace std;
 class ReceptionistReport: Report{
 public:
 int receptionistId;
-void ordersDone(std::vector<std::shared_ptr<Order>> orders);
+ReceptionistReport(int receptionistId, std::map<int, Order*> orders);
+void ordersDone(std::map<int, Order*> orders);
 int totalRevenue;
 
-ReceptionistReport(int receptionistId, std::vector<std::shared_ptr<Order>> orders);
+ReceptionistReport(int receptionistId, Order* orders);
 string toString() override;
-int calculateRevenue();
+int calculateRevenue(map<int, Order*> orders);
 };
 #endif

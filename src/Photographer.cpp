@@ -1,5 +1,8 @@
 #include "Photographer.h"
 #include "Order.h"
+#include "Consumables.h"
+#include "Repo.h"
+#include <iostream>
 using namespace std;
 
 void Photographer::performOrder(Order order)
@@ -8,7 +11,7 @@ void Photographer::performOrder(Order order)
 
 }
 
-void Photographer::useConsumables(std::vector<std::shared_ptr<Consumables>> consumable)
+void Photographer::useConsumables(std::vector<Consumables *> consumable)
 {
     consumable.clear();
 }
