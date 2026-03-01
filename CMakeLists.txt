@@ -9,10 +9,8 @@ add_executable(PhotoStudio
         src/FilmDeveloping.cpp
         src/Order.cpp
         src/Photographer.cpp
-        src/PhotographerReport.cpp
         src/PhotoPrinting.cpp
         src/Receptionist.cpp
-        src/ReceptionistReport.cpp
         src/Report.cpp
         src/StudioAdministrator.cpp
         src/main.cpp

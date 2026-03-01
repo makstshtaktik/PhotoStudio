@@ -10,11 +10,13 @@ using namespace std;
 #define PHOTOGRAPHER_H
 
 class Photographer{
-private:
 string name;
 string surname;
 public:
-int photographerId;
+    string getName();
+    string getSurname();
+    void setName(string name);
+    void setSurname(string surname);
 Photographer(string name, string surname);
 void performOrder(Order order);
 void useConsumables(std::vector<Consumables* > consumables);

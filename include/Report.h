@@ -5,11 +5,16 @@ using namespace std;
 #define REPORT_H
 
 class Report{
-protected: 
+private: 
 int reportId;
+string description;
 public:
-    Report(int reportId);
-virtual ~Report() = default;
-virtual string toString();
+int getReportId();
+string getDescription();
+void setReportId(int reportId);
+void setDescription(string description);
+Report(int reportId, string description);
+~Report();
+string toString();
 };
 #endif

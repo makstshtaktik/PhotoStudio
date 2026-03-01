@@ -20,3 +20,23 @@ Photographer::Photographer(string name, string surname): name(name), surname(sur
 {
 
 }
+
+string Photographer::getName()
+{
+    return name;
+}
+
+string Photographer::getSurname()
+{
+    return surname;
+}
+
+void Photographer::setSurname(string surname)
+{
+    this->surname = surname;
+}
+
+void Photographer::setName(string name)
+{
+    this->name = name;
+}

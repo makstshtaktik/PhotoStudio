@@ -6,7 +6,7 @@ using namespace std;
 
 #define FILMDEVELOPING_H
 
-class FilmDeveloping: Order{
+class FilmDeveloping: public Order{
 public:
 int filmLength;
 FilmDeveloping(int filmLength);

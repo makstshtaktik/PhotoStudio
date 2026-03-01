@@ -9,7 +9,7 @@ void StudioAdministrator::account(std::vector<std::shared_ptr<Consumables>> cons
 {
     for (auto consumable : consumables)
     {
-        cout << "Name: " << consumable->name << "Quantity" + to_string(consumable->quantity) + "\n";
+        cout << "Name: " << consumable->getName() << "Quantity" + to_string(consumable->getQuantity()) + "\n";
     }
 }
 

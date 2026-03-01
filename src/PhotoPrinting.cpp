@@ -2,17 +2,21 @@
 #include <iostream>
 using namespace std;
 
-PhotoPrinting::PhotoPrinting(int photoSize) : Order(orderDescription, price, isFinished, isUrgent, FinishTill, isPaid)
+PhotoPrinting::PhotoPrinting(int photoSize) : Order(orderDescription, price, isFinished, isUrgent, FinishTill, isPaid), photoSize(photoSize)
 {
-    photoSize = photoSize;
-}
-
-int PhotoPrinting::photoSize()
-{
-    return photoSize();
 }
 
 string PhotoPrinting::toString()
 {
-    return "Printing photo of size: " + to_string(photoSize());
+    return "Printing photo of size: " + to_string(photoSize);
+}
+
+int PhotoPrinting::getPhotoSize()
+{
+    return photoSize;
+}
+
+void PhotoPrinting::setPhotoSize(int photoSize)
+{
+    this -> photoSize = photoSize;
 }

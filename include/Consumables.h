@@ -10,12 +10,16 @@ using namespace std;
 
 #define CONSUMABLES_H
 class Consumables{
+    string name;
+    int quantity;
 public:
-string name;
-int quantity;
+    string getName();
+    int getQuantity();
+    void setQuantity(int quantity);
+    void setName(string name);
 Consumables(string name, int quantity);
 void addConsumable(Repo* repo, Consumables* consumable);
-void removeConsumables(Repo* repo);
+void removeConsumables(string consumablename, Repo* repo);
 string toString();
 };
 #endif

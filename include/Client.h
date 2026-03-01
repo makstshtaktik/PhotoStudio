@@ -7,17 +7,21 @@
 using namespace std;
 
 class Client{
-
-private:
     string name;
+    string surname;
+    string email;
 public:
-string surname;
-string email;
 
 Client(string name, string surname, string email);
 string toString();
 void createOrder();
 void payOrder(Order order);
     string getName();
+    string getSurname();
+    string getEmail();
+    void setName(string name);
+    void setSurname(string surname);
+    void setEmail(string email);
+    ~Client();
 };
 #endif
