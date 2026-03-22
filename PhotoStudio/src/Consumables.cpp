@@ -7,9 +7,11 @@
 #include "Repo.h"
 #include <iostream>
 #include <algorithm>
+#include <numeric>
+#include <functional>
 using namespace std;
 
-Consumables::Consumables(string name, int quantity): name(name), quantity(quantity)
+Consumables::Consumables(string name, int quantity, int price): name(name), quantity(quantity), price(price)
 {
 
 }
@@ -40,6 +42,11 @@ int Consumables::getQuantity()
     return quantity;
 }
 
+int Consumables::getPrice()
+{
+    return price;
+}
+
 void Consumables::setName(string name)
 {
     this->name = name;
@@ -47,4 +54,9 @@ void Consumables::setName(string name)
 void Consumables::setQuantity(int quantity)
 {
     this->quantity = quantity;
+}
+
+void Consumables::setPrice(int price)
+{
+    this->price = price;
 }

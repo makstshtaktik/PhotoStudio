@@ -1,3 +1,3 @@
-C:/Users/salaj/source/repos/PhotoStudio/out/build/x64-Debug/CMakeFiles/PhotoStudio.dir
-C:/Users/salaj/source/repos/PhotoStudio/out/build/x64-Debug/CMakeFiles/edit_cache.dir
-C:/Users/salaj/source/repos/PhotoStudio/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
+D:/Max_New/6_sem/Advanced_C_Cpp/Project/Repo/PhotoStudio/PhotoStudio/out/build/x64-Debug/CMakeFiles/PhotoStudio.dir
+D:/Max_New/6_sem/Advanced_C_Cpp/Project/Repo/PhotoStudio/PhotoStudio/out/build/x64-Debug/CMakeFiles/edit_cache.dir
+D:/Max_New/6_sem/Advanced_C_Cpp/Project/Repo/PhotoStudio/PhotoStudio/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
