@@ -64,11 +64,11 @@ int main() {
 
             if (payChoice == 1) {
                 order->isPaid = true;
-                Transaction* trans = new Transaction(repo.counter, &client, order, "Card");
+                Transaction* trans = new Transaction(repo.counter, &client, order, card);
                 cout << trans->toString() << endl;
             }
             else {
-                Transaction* trans = new Transaction(repo.counter, &client, order, "Cash");
+                Transaction* trans = new Transaction(repo.counter, &client, order, cash);
                 cout << "Order will be paid by Cash at pickup." << endl;
             }
 

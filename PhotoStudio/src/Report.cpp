@@ -3,7 +3,6 @@ using namespace std;
 
 Report::Report(int reportId, string description): reportId(reportId), description(description)
 {
-
 }
 
 string Report::toString()

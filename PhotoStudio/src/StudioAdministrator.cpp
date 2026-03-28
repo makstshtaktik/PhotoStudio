@@ -33,3 +33,12 @@ void StudioAdministrator::sort(std::vector<Consumables*> consumables) {
         return a->getPrice() > b->getPrice();
         });
 }
+
+Photographer StudioAdministrator::findPhotographer(std::map<int, Photographer*> photographers, int keyval)
+{
+    auto it = photographers.find(keyval);
+
+    if (it != photographers.end()) {
+        return *(it->second);
+    }
+}
