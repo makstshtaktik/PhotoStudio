@@ -7,12 +7,18 @@ StudioAdministrator::StudioAdministrator(string name, string surname): name(name
 
 }
 
-void StudioAdministrator::account(std::vector<std::shared_ptr<Consumables>> consumables)
+void StudioAdministrator::account(std::vector<Consumables*> consumables)
 {
     for (auto consumable : consumables)
     {
         cout << "Name: " << consumable->getName() << "Quantity" + to_string(consumable->getQuantity()) + "\n";
     }
+}
+
+void StudioAdministrator::recordphotographer(Repo* repo, Photographer* photographer)
+{
+    repo->photographers[repo->counterph] = photographer;
+    repo->counterph++;
 }
 
 string StudioAdministrator::toString()

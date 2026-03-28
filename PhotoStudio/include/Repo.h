@@ -20,6 +20,7 @@ public:
 int counter = 0;
     int countercl = 0;
     int countertr = 0;
+    int counterph = 0;
     std::map<int, Order *> orders;
     std::map<int, Client*> clients;
 std::vector<Consumables *> consumables;

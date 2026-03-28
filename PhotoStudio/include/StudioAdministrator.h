@@ -17,7 +17,8 @@ string surname;
 public:
 int adminId;
 string toString();
-void account(std::vector<std::shared_ptr<Consumables>> consumable);
+void account(std::vector<Consumables*> consumable);
+void recordphotographer(Repo* repo, Photographer* photographer);
 StudioAdministrator(string name, string surname);
 int calc_total(std::vector<Consumables*> consumables);
 void sort(std::vector<Consumables*> consumables);
