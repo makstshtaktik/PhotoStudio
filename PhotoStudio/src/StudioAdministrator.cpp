@@ -48,3 +48,31 @@ Photographer StudioAdministrator::findPhotographer(std::map<int, Photographer*> 
         return *(it->second);
     }
 }
+
+void StudioAdministrator::recordreceptionist(Repo* repo, Receptionist* receptionist)
+{
+    repo->receptionists[repo->counterrp] = receptionist;
+    repo->counterrp++;
+}
+
+Receptionist StudioAdministrator::findReceptionist(std::map<int, Receptionist*> receptionists, int keyval)
+{
+    auto it = receptionists.find(keyval);
+
+    if (it != receptionists.end()) {
+        return *(it->second);
+    }
+}
+
+void StudioAdministrator::printReceptionistInfo(Repo* repo, int id)
+{
+    Receptionist r = findReceptionist(repo->receptionists, id);
+    cout << "Receptionist with id: " << id << " is: " << r.toString() << endl;
+}
+
+void StudioAdministrator::printPhotographerInfo(Repo* repo, int id)
+{
+    Photographer p = findPhotographer(repo->photographers, id);
+    cout << "Photographer with id: " << id << " is: " << p.toString() << endl;
+}
+

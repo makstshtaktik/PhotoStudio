@@ -29,5 +29,8 @@ string toString();
 Order findOrders(std::map<int, Order*> orders, int keyval);
 Client findClients(std::map<int, Client*> clients, int keyval);
 Transaction findTransactions(std::map<int, Transaction*> transactions, int keyval);
+void printOrderInfo(Repo* repo, int id);
+void printClientInfo(Repo* repo, int id);
+void printTransactionInfo(Repo* repo, int id);
 };
 #endif

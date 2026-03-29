@@ -21,5 +21,6 @@ public:
 Photographer(string name, string surname);
 void performOrder(Order order);
 void useConsumables(std::vector<Consumables* > consumables);
+string toString();
 };
 #endif

@@ -54,3 +54,21 @@ Transaction Receptionist::findTransactions(std::map<int, Transaction*> transacti
         return *(it->second);
     }
 }
+
+void Receptionist::printOrderInfo(Repo* repo, int id)
+{
+    Order o = findOrders(repo->orders, id);
+    cout << "Order with id: " << id << " is: " << o.toString() << endl;
+}
+
+void Receptionist::printClientInfo(Repo* repo, int id)
+{
+    Client c = findClients(repo->clients, id);
+    cout << "Order with id: " << id << " is: " << c.toString() << endl;
+}
+
+void Receptionist::printTransactionInfo(Repo* repo, int id)
+{
+    Transaction t = findTransactions(repo->transactions, id);
+    cout << "Order with id: " << id << " is: " << t.toString() << endl;
+}
