@@ -40,3 +40,7 @@ void Photographer::setName(string name)
 {
     this->name = name;
 }
+
+string Photographer::toString() {
+    return "Name: " + name + "Surname: " + surname;
+}

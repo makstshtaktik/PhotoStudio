@@ -14,6 +14,6 @@ add_executable(PhotoStudio
         src/Report.cpp
         src/StudioAdministrator.cpp
         src/main.cpp
-)
+ "include/Transaction.h" "src/Transaction.cpp")
 
 target_include_directories(PhotoStudio PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/include")

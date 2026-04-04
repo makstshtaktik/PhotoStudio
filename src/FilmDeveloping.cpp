@@ -7,6 +7,6 @@ string FilmDeveloping::toString()
     return "Film Developing order";
 }
 
-FilmDeveloping::FilmDeveloping(int filmLength) : Order(orderDescription, price, isFinished, isUrgent, FinishTill, isPaid), filmLength(filmLength)
+FilmDeveloping::FilmDeveloping(int filmLength) : Order(orderDescription, price, isFinished, isUrgent, FinishTill, OrderTime, isPaid), filmLength(filmLength)
 {
 }

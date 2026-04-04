@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-PhotoPrinting::PhotoPrinting(int photoSize) : Order(orderDescription, price, isFinished, isUrgent, FinishTill, isPaid), photoSize(photoSize)
+PhotoPrinting::PhotoPrinting(int photoSize) : Order(orderDescription, price, isFinished, isUrgent, FinishTill, OrderTime, isPaid), photoSize(photoSize)
 {
 }
 

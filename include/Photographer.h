@@ -8,6 +8,7 @@ using namespace std;
 #ifndef PHOTOGRAPHER_H
 
 #define PHOTOGRAPHER_H
+class Order;
 
 class Photographer{
 string name;
@@ -20,5 +21,6 @@ public:
 Photographer(string name, string surname);
 void performOrder(Order order);
 void useConsumables(std::vector<Consumables* > consumables);
+string toString();
 };
 #endif

@@ -1,11 +1,13 @@
 #pragma once
 #include <iostream>
+
 #include "Order.h"
 #ifndef CLIENT_H
 
 #define CLIENT_H
 using namespace std;
 
+class Order;
 class Client{
     string name;
     string surname;
