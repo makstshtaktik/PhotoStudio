@@ -55,6 +55,16 @@ Transaction Receptionist::findTransactions(std::map<int, Transaction*> transacti
     }
 }
 
+bool Receptionist::findBySurname(Repo* repo, string& surname)
+{
+    auto it = find_if(repo->clients.begin(), repo->clients.end(), [&surname](auto& pair) {return pair.second->surname == surname;});
+
+    if (it != repo->clients.end()) {
+        return true;
+    }
+    return false;
+}
+
 void Receptionist::printOrderInfo(Repo* repo, int id)
 {
     Order o = findOrders(repo->orders, id);
@@ -78,10 +88,4 @@ void Receptionist::createTransaction(Repo* repo, Client* client, Order* order, P
     Transaction* tr = new Transaction(repo->countertr++, client, order, paymode);
     recordTransaction(repo, tr);
 
-}
-
-void Receptionist::createClient(Repo* repo, string* name, string* surname, string* email)
-{
-    Client* cl = new Client(*name, *surname, *email);
-	recordClient(repo, cl);
 }

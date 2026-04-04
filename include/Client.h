@@ -10,9 +10,9 @@ using namespace std;
 class Order;
 class Client{
     string name;
-    string surname;
     string email;
 public:
+    string surname;
 
 Client(string name, string surname, string email);
 string toString();

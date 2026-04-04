@@ -21,10 +21,13 @@ using namespace std;
 
 int main() {
     Repo repo;
-    Receptionist receptionist("Pavol", "Salaj");
-    Client client("Maksym", "Tsyhypalo", "t.max@gmail.com");
-    StudioAdministrator admin("Name", "Surname");
-	Photographer photographer("Name2", "Surname2");
+    Receptionist receptionist("Paul", "Big");
+    Client client("Max", "Sur", "max.test334@test.com");
+    StudioAdministrator admin("Jon", "Doe");
+	Photographer photographer("Ann", "Smith");
+    admin.recordreceptionist(&repo, &receptionist);
+    admin.recordphotographer(&repo, &photographer);
+    receptionist.recordClient(&repo, &client);
 
     int mainchoice;
 
@@ -80,6 +83,23 @@ int main() {
         }
 
         else if (mainchoice == 2) {
+            string surname;
+
+            cout << "Login using surname: \n";
+            cin >> surname;
+
+            if(!receptionist.findBySurname(&repo, surname)){
+                string name;
+                string email;
+                cout << "New user detected!\n";
+                cout << "Enter your name: \n";
+                cin >> name;
+                cout << "Enter your email: \n";
+                cin >> email;
+                Client c(name, surname, email);
+                receptionist.recordClient(&repo, &c);
+            }
+            
             cout << "1. Make Order\n";
             cout << "2. Show Orders\n";
             cout << "3. Exit Program\n";
