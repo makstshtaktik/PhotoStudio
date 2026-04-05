@@ -166,7 +166,7 @@ int main() {
 
                 receptionist.recordOrder(&repo, order);
 
-                cout << "Order with id: "<< order->orderId <<" was created and saved.\n";
+                cout << "Order with id: "<< order->orderId <<" of price: " << order->getPrice() <<" was created and saved.\n";
             }
             else if (choice == 2) {
                 int id;
