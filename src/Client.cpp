@@ -20,7 +20,7 @@ void Client::payOrder(Order order)
 
 string Client::toString()
 {
-    return "Client with name: " + name + " surname: " + surname + " email: " + email;
+    return "Client with name: " + name + " " + "surname: " + surname + " " + "email: " + email;
 }
 
 string Client::getName()

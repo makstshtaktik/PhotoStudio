@@ -23,7 +23,7 @@ void StudioAdministrator::recordphotographer(Repo* repo, Photographer* photograp
 
 string StudioAdministrator::toString()
 {
-    return "Name: " + name + " Surname: " + surname;
+    return "Name: " + name + " " + " Surname: " + surname;
 }
 
 int StudioAdministrator::calc_total(std::vector<Consumables*> consumables) {

@@ -28,7 +28,7 @@ void Receptionist::recordTransaction(Repo* repo, Transaction* transaction) {
 
 string Receptionist::toString()
 {
-    return "Name: " + name + " Surname: " + surname;
+    return "Name: " + name + " " + "Surname: " + surname;
 }
 
 Order* Receptionist::findOrders(std::map<int, Order*> orders, int keyval) {

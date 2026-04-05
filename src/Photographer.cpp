@@ -42,5 +42,5 @@ void Photographer::setName(string name)
 }
 
 string Photographer::toString() {
-    return "Name: " + name + "Surname: " + surname;
+    return "Name: " + name + " " + "Surname: " + surname;
 }
