@@ -21,8 +21,6 @@ public:
     void setName(string name);
     void setPrice(int price);
 Consumables(string name, int quantity, int price);
-void addConsumable(Repo* repo, Consumables* consumable);
-void removeConsumables(string consumablename, Repo* repo);
 string toString();
 };
 #endif

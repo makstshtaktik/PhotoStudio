@@ -110,3 +110,31 @@ void StudioAdministrator::printPhotographerInfo(Repo* repo, int id)
     cout << "Photographer with id: " << id << " is: " << p.toString() << endl;
 }
 
+void StudioAdministrator::createConsumable(Repo* repo)
+{
+    string name;
+    int quantity, price;
+    cout << "Enter name: " << endl;
+    cin >> name;
+    cout << "Enter quantity: " << endl;
+    cin >> quantity;
+    cout << "Enter price: " << endl;
+    cin >> price;
+    Consumables* c = new Consumables(name, quantity, price);
+    addConsumable(repo, c);
+}
+
+
+void StudioAdministrator::addConsumable(Repo* repo, Consumables* consumable)
+{
+    repo->consumables.push_back(consumable);
+}
+
+void StudioAdministrator::removeConsumable(Repo* repo, string consumablename)
+{
+
+    repo->consumables.erase(std::remove_if(repo->consumables.begin(), repo->consumables.end(), [&](Consumables* c) { if (c->getName() == consumablename) { delete c; return true; } return false; }),
+        repo->consumables.end()
+    );
+}
+

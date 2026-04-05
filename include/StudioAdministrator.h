@@ -30,5 +30,8 @@ void createphotographer(Repo* repo);
 void createreceptionist(Repo* repo);
 void printReceptionistInfo(Repo* repo, int id);
 void printPhotographerInfo(Repo* repo, int id);
+void createConsumable(Repo* repo);
+void addConsumable(Repo* repo, Consumables* consumable);
+void removeConsumable(Repo* repo, string consumablename);
 };
 #endif

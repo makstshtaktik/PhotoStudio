@@ -45,6 +45,7 @@ int main() {
         cout << "2. Login as client\n";
         cout << "3. Login as receptionist\n";
         cout << "4. Login as photographer\n";
+        cout << "5. Exit program\n";
         cout << "Choose an option: ";
         cin >> mainchoice;
 
@@ -54,6 +55,8 @@ int main() {
             cout << "2. Show Receptionists\n";
             cout << "3. Add Receptionists\n";
             cout << "4. Add Photographers\n";
+            cout << "5. Add Consumables\n";
+            cout << "6. Remove Consumables\n";
             cin >> admchoice;
             if (admchoice == 1) {
                 cout << "\n--- PHOTOGRAPHERS ---\n";
@@ -76,6 +79,17 @@ int main() {
                 cout << "\n--- ADD PHOTOGRAPHER ---\n";
 				admin.createphotographer(&repo);
             }
+            else if (admchoice == 5) {
+                cout << "\n--- ADD CONSUMABLE ---\n";
+                admin.createConsumable(&repo);
+            }
+            else if (admchoice == 6) {
+                string param;
+                cout << "\n--- REMOVE CONSUMABLE ---\n";
+                cout << "Enter consumable name: \n";
+                cin >> param;
+                admin.removeConsumable(&repo, param);
+            }
             else {
                 cout << "Invalid choice.\n";
             }
@@ -88,7 +102,11 @@ int main() {
             cout << "Login using surname: \n";
             cin >> surname;
 
-            if(!receptionist.findBySurname(&repo, surname)){
+            Client* currentClient = nullptr;
+
+            currentClient = receptionist.findBySurname(&repo, surname);
+
+            if(currentClient == nullptr){
                 string name;
                 string email;
                 cout << "New user detected!\n";
@@ -96,13 +114,15 @@ int main() {
                 cin >> name;
                 cout << "Enter your email: \n";
                 cin >> email;
-                Client c(name, surname, email);
-                receptionist.recordClient(&repo, &c);
+                currentClient = new Client(name, surname, email);
+                receptionist.recordClient(&repo, currentClient);
+            }
+            else {
+                currentClient = receptionist.findBySurname(&repo, surname);
             }
             
             cout << "1. Make Order\n";
             cout << "2. Show Orders\n";
-            cout << "3. Exit Program\n";
             cout << "Choose an option: ";
             cin >> choice;
 
@@ -136,36 +156,29 @@ int main() {
 
                 if (payChoice == 1) {
                     order->isPaid = true;
-                    Transaction* trans = new Transaction(repo.counter, &client, order, card);
-                    receptionist.createTransaction(&repo, &client, order, card);
-                    cout << trans->toString() << endl;
+                    receptionist.createTransaction(&repo, currentClient, order, card);
+                    cout << "Order is payed by Card." << endl;
                 }
                 else {
-                    Transaction* trans = new Transaction(repo.counter, &client, order, cash);
-                    receptionist.createTransaction(&repo, &client, order, cash);
+                    receptionist.createTransaction(&repo, currentClient, order, cash);
                     cout << "Order will be paid by Cash at pickup." << endl;
                 }
 
                 receptionist.recordOrder(&repo, order);
 
-                cout << "Order created and saved.\n";
+                cout << "Order with id: "<< order->orderId <<" was created and saved.\n";
             }
             else if (choice == 2) {
-                cout << "\n--- ALL ORDERS ---\n";
+                int id;
+                cout << "Enter order id: ";
+                cin>>id;
 
                 if (repo.orders.empty()) {
                     cout << "No orders yet.\n";
                 }
                 else {
-                    for (auto& pair : repo.orders) {
-                        cout << "Order ID: " << pair.first
-                            << " | " << pair.second->toString() << "\n";
-                    }
+                    receptionist.printOrderInfo(&repo, id);
                 }
-            }
-            else if (choice == 3) {
-                cout << "Exiting program...\n";
-                break;
             }
             else {
                 cout << "Invalid choice.\n";
@@ -226,6 +239,10 @@ int main() {
                     cout << "Order not found.\n";
                 }
                 //do
+            }
+            else if (mainchoice == 5) {
+                cout << "Exiting program...\n";
+                break;
             }
             else {
                 cout << "Invalid choice.\n";

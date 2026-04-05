@@ -31,56 +31,59 @@ string Receptionist::toString()
     return "Name: " + name + " Surname: " + surname;
 }
 
-Order Receptionist::findOrders(std::map<int, Order*> orders, int keyval) {
+Order* Receptionist::findOrders(std::map<int, Order*> orders, int keyval) {
     auto it = orders.find(keyval);
     
     if (it != orders.end()) {
-        return *(it->second);
+        return it->second;
     }
+    return nullptr;
 }
 
-Client Receptionist::findClients(std::map<int, Client*> clients, int keyval) {
+Client* Receptionist::findClients(std::map<int, Client*> clients, int keyval) {
     auto it = clients.find(keyval);
 
     if (it != clients.end()) {
-        return *(it->second);
+        return it->second;
     }
+    return nullptr;
 }
 
-Transaction Receptionist::findTransactions(std::map<int, Transaction*> transactions, int keyval) {
+Transaction* Receptionist::findTransactions(std::map<int, Transaction*> transactions, int keyval) {
     auto it = transactions.find(keyval);
 
     if (it != transactions.end()) {
-        return *(it->second);
+        return it->second;
     }
+    return nullptr;
 }
 
-bool Receptionist::findBySurname(Repo* repo, string& surname)
+Client* Receptionist::findBySurname(Repo* repo, string& surname)
 {
     auto it = find_if(repo->clients.begin(), repo->clients.end(), [&surname](auto& pair) {return pair.second->surname == surname;});
 
     if (it != repo->clients.end()) {
-        return true;
+        return it->second;
     }
-    return false;
+    return nullptr;
 }
 
 void Receptionist::printOrderInfo(Repo* repo, int id)
 {
-    Order o = findOrders(repo->orders, id);
-    cout << "Order with id: " << id << " is: " << o.toString() << endl;
+    Order* o = findOrders(repo->orders, id);
+    cout << "Order with id: " << id << " is: " << o->toString() << endl;
 }
 
 void Receptionist::printClientInfo(Repo* repo, int id)
 {
-    Client c = findClients(repo->clients, id);
-    cout << "Order with id: " << id << " is: " << c.toString() << endl;
+    Client* c = findClients(repo->clients, id);
+    cout << "Client with id: " << id << " is: " << c->toString() << endl;
 }
 
 void Receptionist::printTransactionInfo(Repo* repo, int id)
 {
-    Transaction t = findTransactions(repo->transactions, id);
-    cout << "Order with id: " << id << " is: " << t.toString() << endl;
+    Transaction* t = findTransactions(repo->transactions, id);
+    cout << "Transaction with id: " << id << " is: " << t->toString() << endl;
 }
 
 void Receptionist::createTransaction(Repo* repo, Client* client, Order* order, PayMode paymode)
