@@ -1,45 +1,55 @@
 # PhotoStudio
 Advanced C/C++ photo studio project
 
-Problem Description:
+System description:
 Photo Studio project is a Management System in a console-based enviroment developed in C++.
-This system is designed for small photography studio where stuff must manage orders, payment and material usage.
+This system is designed for small photography studio where orders, materials, staff are managed.
 In many small companies making orders and keeping track of them takes most of the time from a working shift,
 with this system we strife for cutting the corners and keeping data and track of them easy.
-This system calculates pricing automatically based on deadlines and urgency rules. It stores orders in memory during runtime,
-allowing the staff to review them later.
-This solution improves organisation and reduces human error also demonstrates proper layered software architecture.
+This system calculates pricing automatically based on urgency of the order. It stores orders in memory during runtime,
+allowing the staff to review them later. This solution improves organisation and reduces human error.
 
-System Purpose:
-Purpose of the system is to make work easier by making orders, applying pricing rules and storing them in memory.
-Keeping track of materials for easier inventory observation.
-The System demonstrates separation between UI, business logic and Repository.
-
-Main Use Case:
-The main use case is creating and storing a customer order. 
-The user selects the "Make Order" option in the console menu, 
-enters the order description and deadline, 
-and selects a payment method. 
-The system calculates the order price based on whether the deadline makes the order urgent. 
-If payment by card is selected, a transaction is created immediately otherwise customer can pay during pickup. 
-The order object is then stored in the repository, and the system state is updated. 
-The user can later select "Show Orders" to display all stored orders.
+Logic flow:
+Program helps create an order for multiple clients depending on their surname as login,
+for example if a new user chooses to login as client (surname not found) program will create new Client object 
+where it will ask the user for additional information such as Name and Email, with these information
+program will be able to record new Client as an object and therefor use it for creating orders.
+Creating orders is simple, login as client choose "make order" write description, time, payment method and then its created.
+Now Receptionist after login is able to look at transactions and orders and clients.
+But Photographer is the one who needs to take the photos so he is responsible for finishing the orders.
+at the end they should automatically report material usage to the admnisitrator.
+Administrator can Add/Show each object except order.
 
 System Entities
-Client-Represents a customer
-Order-Represents the main business object
-Transaction-Represents a payment exchange
+Admin- system administrator
+Client- customer which places order with its description
+Receptionist- we record orders as this entity
+Photographer- responsible for taking out order
+Order- main object
+Transaction- transaction object
+Consumables- object with which we track inventory
+Also other smaller suportive entities are present.
 
-Also other suportive entities are present.
+Main Scenario:
+1. 	We run the program
+2. 	Program welcomes us with 4 login options (Admin,Client,Receptionist,Photographer)
+3. 	We input number 2 for Client
+4. 	Program requests our surname
+5. 	We input "Sur"
+6. 	Program shows us multiple options for Order (Make ,Show)
+7. 	We choose "Make Order"
+8. 	Program ask us for order description and later date and payment method
+9. 	We fill out everything but choose todays date (for urgency example)
+10.	Program shows us cost of the order
+11.	Now we login as Photographer
+12.	Program offers two options for Order (Show, Finish)
+13.	We choose "Show orders"
+14. Program showed us all orders
+15. We run back to the previous point and choose "Finish Orders"
+16.	Program asks us to provide ID of the order we want to finish
+17. We input 0
+18. Program declares Order as finished
+19. We then choose "Login as Admin" 
+20. Program offers us multiple choices again
+21. We choose //TBA
 
-Main System Algorithm:
-1. User selects command in UI menu
-2. UI reads required input values
-3. UI sends input to Logic Layer
-4. Logic Layer validates input
-5. Logic Layer checks business rules
-6. Logic Layer requests data from Repository
-7. Logic Layer creates or updates objects
-8. Repository stores updated data
-9. Logic Layer returns result
-10. UI prints result to user
