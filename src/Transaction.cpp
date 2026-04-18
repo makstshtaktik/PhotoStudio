@@ -2,7 +2,7 @@
 #include "Client.h"
 #include "Order.h"
 
-Transaction::Transaction(int id, Client* c, Order* o, PayMode paymode)
+Transaction::Transaction(int id, std::shared_ptr<Client> c, std::shared_ptr<Order> o, PayMode paymode)
     : transactionId(id), client(c), order(o), paymode(paymode) {
     this->transactionDate = time(NULL);
 }

@@ -20,13 +20,13 @@ enum PayMode {
 class Transaction {
 private:
     int transactionId;
-    Client* client;
-    Order* order;
+    std::shared_ptr<Client> client;
+    std::shared_ptr<Order> order;
     time_t transactionDate;
     PayMode paymode;
 
 public:
-    Transaction(int id, Client* c, Order* o, PayMode method);
+    Transaction(int id, std::shared_ptr<Client> c, std::shared_ptr<Order> o, PayMode method);
 
     // Getters
     int getTransactionId();

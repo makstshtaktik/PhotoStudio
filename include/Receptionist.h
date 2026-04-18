@@ -22,17 +22,18 @@ public:
 int receptionistId;
 
 Receptionist(string name, string surname);
-void recordOrder(Repo* repo, Order* order);
-void recordClient(Repo* repo, Client* client);
-void recordTransaction(Repo* repo, Transaction* transaction);
+void recordOrder(std::shared_ptr<Repo> repo, std::shared_ptr<Order> order);
+void recordClient(std::shared_ptr<Repo> repo, std::shared_ptr<Client> client);
+void recordTransaction(std::shared_ptr<Repo> repo, std::shared_ptr<Transaction> transaction);
 string toString();
-Order* findOrders(std::map<int, Order*> orders, int keyval);
-Client* findClients(std::map<int, Client*> clients, int keyval);
-Transaction* findTransactions(std::map<int, Transaction*> transactions, int keyval);
-Client* findBySurname(Repo* repo, string& surname);
-void printOrderInfo(Repo* repo, int id);
-void printClientInfo(Repo* repo, int id);
-void printTransactionInfo(Repo* repo, int id);
-void createTransaction(Repo* repo, Client* client, Order* order, PayMode paymode);
+std::shared_ptr<Order> findOrders(std::map<int, std::shared_ptr<Order>> orders, int keyval);
+std::shared_ptr<Client> findClients(std::map<int, std::shared_ptr<Client>> clients, int keyval);
+std::shared_ptr<Transaction> findTransactions(std::map<int, std::shared_ptr<Transaction>> transactions, int keyval);
+std::shared_ptr<Client> findBySurname(std::shared_ptr<Repo> repo, string& surname);
+void printOrderInfo(std::shared_ptr<Repo> repo, int id);
+void printClientInfo(std::shared_ptr<Repo> repo, int id);
+void printTransactionInfo(std::shared_ptr<Repo> repo, int id);
+void createTransaction(std::shared_ptr<Repo> repo, std::shared_ptr<Client> client, std::shared_ptr<Order> order, PayMode paymode);
+std::shared_ptr<Client> createClient(string clientSurname);
 };
 #endif

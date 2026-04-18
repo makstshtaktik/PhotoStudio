@@ -2,12 +2,13 @@
 #include <iostream>
 using namespace std;
 
-int Order::getPrice()
+double Order::getPrice()
 {
     return price;
 }
 
-Order::Order(string orderDescription, string FinishTillst) : orderDescription(orderDescription) {
+Order::Order(std::string orderDescription, std::string FinishTillst) {
+    this->orderDescription = orderDescription;
     this->FinishTill = stol(FinishTillst);
     this->isPaid = false; 
     this->isFinished = false; 
@@ -24,17 +25,17 @@ Order::Order(string orderDescription, string FinishTillst) : orderDescription(or
     } 
 }
 
-string Order::toString()
+std::string Order::toString()
 {
     //time conversion
     char buffer[20];
     tm* timeinfo = localtime(&FinishTill);
     strftime(buffer, sizeof(buffer), "%Y-%m-%d", timeinfo);
-    string dateStr(buffer);
+    std::string dateStr(buffer);
 
     tm* timeinfo2 = localtime(&OrderTime);
     strftime(buffer, sizeof(buffer), "%Y-%m-%d", timeinfo);
-    string dateStr1(buffer);
+    std::string dateStr1(buffer);
 
     return "\nOrder: " + orderDescription +
         "\nPrice: (" + to_string(price) + ")" +
@@ -46,7 +47,7 @@ string Order::toString()
 }
 
 
-Order::Order(string orderDescription, double price, bool isFinished, bool isUrgent, time_t FinishTill, time_t OrderTime, bool isPaid)
+Order::Order(std::string orderDescription, double price, bool isFinished, bool isUrgent, time_t FinishTill, time_t OrderTime, bool isPaid)
 {
     this ->orderDescription = orderDescription;
     this ->price = price;

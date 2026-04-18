@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <memory>
 
 #include "Consumables.h"
 #include "Photographer.h"
@@ -18,20 +19,20 @@ string surname;
 public:
 int adminId;
 string toString();
-void account(std::vector<Consumables*> consumable);
-void recordphotographer(Repo* repo, Photographer* photographer);
+void account(std::vector<std::shared_ptr<Consumables>> consumable);
+void recordphotographer(std::shared_ptr<Repo> repo, std::shared_ptr<Photographer> photographer);
 StudioAdministrator(string name, string surname);
-int calc_total(std::vector<Consumables*> consumables);
-void sort(std::vector<Consumables*> consumables);
-Photographer findPhotographer(std::map<int, Photographer*> photographers, int keyval);
-void recordreceptionist(Repo* repo, Receptionist* receptionist);
-Receptionist findReceptionist(std::map<int, Receptionist*> receptionists, int keyval);
-void createphotographer(Repo* repo);
-void createreceptionist(Repo* repo);
-void printReceptionistInfo(Repo* repo, int id);
-void printPhotographerInfo(Repo* repo, int id);
-void createConsumable(Repo* repo);
-void addConsumable(Repo* repo, Consumables* consumable);
-void removeConsumable(Repo* repo, string consumablename);
+int calc_total(std::vector<std::shared_ptr<Consumables>> consumables);
+void sort(std::vector<std::shared_ptr<Consumables>> consumables);
+Photographer findPhotographer(std::map<int, std::shared_ptr<Photographer>> photographers, int keyval);
+void recordreceptionist(std::shared_ptr<Repo> repo, std::shared_ptr<Receptionist> receptionist);
+Receptionist findReceptionist(std::map<int, std::shared_ptr<Receptionist>> receptionists, int keyval);
+void createphotographer(std::shared_ptr<Repo> repo);
+void createreceptionist(std::shared_ptr<Repo> repo);
+void printReceptionistInfo(std::shared_ptr<Repo> repo, int id);
+void printPhotographerInfo(std::shared_ptr<Repo> repo, int id);
+void createConsumable(std::shared_ptr<Repo> repo);
+void addConsumable(std::shared_ptr<Repo> repo, std::shared_ptr<Consumables> consumable);
+void removeConsumable(std::shared_ptr<Repo> repo, string consumablename);
 };
 #endif

@@ -1,23 +1,27 @@
 #pragma once
-#include <iostream>
 
-#include "Order.h"
 #ifndef CLIENT_H
 
 #define CLIENT_H
+
+#include <iostream>
+#include <memory>
+#include <string>
+
+#include "Order.h"
 using namespace std;
 
-class Order;
 class Client{
-    string name;
-    string email;
+protected:
+    std::string name;
+    std::string email; 
 public:
-    string surname;
+    std::string surname;
 
-Client(string name, string surname, string email);
+Client(std::string name, std::string surname, std::string email);
 string toString();
-void createOrder();
-void payOrder(Order order);
+std::shared_ptr<Order> createOrder();
+void payOrder(std::shared_ptr<Order> order);
     string getName();
     string getSurname();
     string getEmail();

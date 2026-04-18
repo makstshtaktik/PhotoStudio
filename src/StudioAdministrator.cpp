@@ -7,7 +7,7 @@ StudioAdministrator::StudioAdministrator(string name, string surname): name(name
 
 }
 
-void StudioAdministrator::account(std::vector<Consumables*> consumables)
+void StudioAdministrator::account(std::vector<std::shared_ptr<Consumables>> consumables)
 {
     for (auto consumable : consumables)
     {
@@ -15,7 +15,7 @@ void StudioAdministrator::account(std::vector<Consumables*> consumables)
     }
 }
 
-void StudioAdministrator::recordphotographer(Repo* repo, Photographer* photographer)
+void StudioAdministrator::recordphotographer(std::shared_ptr<Repo> repo, std::shared_ptr<Photographer> photographer)
 {
     repo->photographers[repo->counterph] = photographer;
     repo->counterph++;
@@ -26,21 +26,21 @@ string StudioAdministrator::toString()
     return "Name: " + name + " " + " Surname: " + surname;
 }
 
-int StudioAdministrator::calc_total(std::vector<Consumables*> consumables) {
+int StudioAdministrator::calc_total(std::vector<std::shared_ptr<Consumables>> consumables) {
     return std::accumulate(consumables.begin(), consumables.end(), 0,
-        [](int sum, Consumables* c) {
+        [](int sum, std::shared_ptr<Consumables> c) {
             return sum + (c ? c->getPrice() : 0);
         }
     );
 }
 
-void StudioAdministrator::sort(std::vector<Consumables*> consumables) {
-    std::sort(consumables.begin(), consumables.end(), [](Consumables* a, Consumables* b) {
+void StudioAdministrator::sort(std::vector<std::shared_ptr<Consumables>> consumables) {
+    std::sort(consumables.begin(), consumables.end(), [](std::shared_ptr<Consumables> a, std::shared_ptr<Consumables> b) {
         return a->getPrice() > b->getPrice();
         });
 }
 
-Photographer StudioAdministrator::findPhotographer(std::map<int, Photographer*> photographers, int keyval)
+Photographer StudioAdministrator::findPhotographer(std::map<int, std::shared_ptr<Photographer>> photographers, int keyval)
 {
     auto it = photographers.find(keyval);
 
@@ -49,13 +49,13 @@ Photographer StudioAdministrator::findPhotographer(std::map<int, Photographer*> 
     }
 }
 
-void StudioAdministrator::recordreceptionist(Repo* repo, Receptionist* receptionist)
+void StudioAdministrator::recordreceptionist(std::shared_ptr<Repo> repo, std::shared_ptr<Receptionist> receptionist)
 {
     repo->receptionists[repo->counterrp] = receptionist;
     repo->counterrp++;
 }
 
-Receptionist StudioAdministrator::findReceptionist(std::map<int, Receptionist*> receptionists, int keyval)
+Receptionist StudioAdministrator::findReceptionist(std::map<int, std::shared_ptr<Receptionist>> receptionists, int keyval)
 {
     auto it = receptionists.find(keyval);
 
@@ -64,7 +64,7 @@ Receptionist StudioAdministrator::findReceptionist(std::map<int, Receptionist*> 
     }
 }
 
-void StudioAdministrator::createphotographer(Repo* repo)
+void StudioAdministrator::createphotographer(std::shared_ptr<Repo> repo)
 {
     string name, surname;
 
@@ -74,14 +74,14 @@ void StudioAdministrator::createphotographer(Repo* repo)
     cout << "Enter photographer surname: ";
     cin >> surname;
 
-    Photographer* photographer = new Photographer(name, surname);
+    std::shared_ptr<Photographer> photographer = make_shared<Photographer>(name, surname);
 
 	recordphotographer(repo, photographer);
 
     cout << "Photographer added successfully!\n";
 }
 
-void StudioAdministrator::createreceptionist(Repo* repo)
+void StudioAdministrator::createreceptionist(std::shared_ptr<Repo> repo)
 {
     string name, surname;
 
@@ -91,26 +91,26 @@ void StudioAdministrator::createreceptionist(Repo* repo)
     cout << "Enter receptionist surname: ";
     cin >> surname;
 
-    Receptionist* receptionist = new Receptionist(name, surname);
+    std::shared_ptr<Receptionist> receptionist = make_shared<Receptionist>(name, surname);
 
     recordreceptionist(repo, receptionist);
 
     cout << "Receptionist added successfully!\n";
 }
 
-void StudioAdministrator::printReceptionistInfo(Repo* repo, int id)
+void StudioAdministrator::printReceptionistInfo(std::shared_ptr<Repo> repo, int id)
 {
     Receptionist r = findReceptionist(repo->receptionists, id);
     cout << "Receptionist with id: " << id << " is: " << r.toString() << endl;
 }
 
-void StudioAdministrator::printPhotographerInfo(Repo* repo, int id)
+void StudioAdministrator::printPhotographerInfo(std::shared_ptr<Repo> repo, int id)
 {
     Photographer p = findPhotographer(repo->photographers, id);
     cout << "Photographer with id: " << id << " is: " << p.toString() << endl;
 }
 
-void StudioAdministrator::createConsumable(Repo* repo)
+void StudioAdministrator::createConsumable(std::shared_ptr<Repo> repo)
 {
     string name;
     int quantity, price;
@@ -120,20 +120,20 @@ void StudioAdministrator::createConsumable(Repo* repo)
     cin >> quantity;
     cout << "Enter price: " << endl;
     cin >> price;
-    Consumables* c = new Consumables(name, quantity, price);
+    std::shared_ptr<Consumables> c = make_shared<Consumables>(Consumables(name, quantity, price));
     addConsumable(repo, c);
 }
 
 
-void StudioAdministrator::addConsumable(Repo* repo, Consumables* consumable)
+void StudioAdministrator::addConsumable(std::shared_ptr<Repo> repo, std::shared_ptr<Consumables> consumable)
 {
     repo->consumables.push_back(consumable);
 }
 
-void StudioAdministrator::removeConsumable(Repo* repo, string consumablename)
+void StudioAdministrator::removeConsumable(std::shared_ptr<Repo> repo, string consumablename)
 {
 
-    repo->consumables.erase(std::remove_if(repo->consumables.begin(), repo->consumables.end(), [&](Consumables* c) { if (c->getName() == consumablename) { delete c; return true; } return false; }),
+    repo->consumables.erase(std::remove_if(repo->consumables.begin(), repo->consumables.end(), [&](std::shared_ptr<Consumables> c) { return c->getName() == consumablename; }),
         repo->consumables.end()
     );
 }

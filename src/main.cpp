@@ -20,14 +20,14 @@
 using namespace std;
 
 int main() {
-    Repo repo;
-    Receptionist receptionist("Paul", "Big");
-    Client client("Max", "Sur", "max.test334@test.com");
-    StudioAdministrator admin("Jon", "Doe");
-	Photographer photographer("Ann", "Smith");
-    admin.recordreceptionist(&repo, &receptionist);
-    admin.recordphotographer(&repo, &photographer);
-    receptionist.recordClient(&repo, &client);
+    auto repo = make_shared<Repo>();
+    auto receptionist = make_shared<Receptionist>("Paul", "Big");
+    auto client = make_shared<Client>("Max", "Sur", "max.test334@test.com");
+    auto admin = make_shared<StudioAdministrator>("Jon", "Doe");
+    auto photographer = make_shared<Photographer>("Ann", "Smith");
+    admin->recordreceptionist(repo, receptionist);
+    admin->recordphotographer(repo, photographer);
+    receptionist->recordClient(repo, client);
 
     int mainchoice;
 
@@ -60,35 +60,35 @@ int main() {
             cin >> admchoice;
             if (admchoice == 1) {
                 cout << "\n--- PHOTOGRAPHERS ---\n";
-                for (auto& p : repo.photographers) {
+                for (auto& p : repo->photographers) {
                     cout << p.second->toString() << endl;
                 }
             }
             else if (admchoice == 2) {
                 cout << "\n--- RECEPTIONISTS ---\n";
-                for (auto& r : repo.receptionists) {
+                for (auto& r : repo->receptionists) {
                     cout << r.second->toString() << endl;
                 }
             }
             else if (admchoice == 3) {
                 cout << "\n--- ADD RECEPTIONISTS ---\n";
-                admin.createreceptionist(&repo);
+                admin->createreceptionist(repo);
 
             }
             else if (admchoice == 4) {
                 cout << "\n--- ADD PHOTOGRAPHER ---\n";
-				admin.createphotographer(&repo);
+				admin->createphotographer(repo);
             }
             else if (admchoice == 5) {
                 cout << "\n--- ADD CONSUMABLE ---\n";
-                admin.createConsumable(&repo);
+                admin->createConsumable(repo);
             }
             else if (admchoice == 6) {
                 string param;
                 cout << "\n--- REMOVE CONSUMABLE ---\n";
                 cout << "Enter consumable name: \n";
                 cin >> param;
-                admin.removeConsumable(&repo, param);
+                admin->removeConsumable(repo, param);
             }
             else {
                 cout << "Invalid choice.\n";
@@ -102,23 +102,16 @@ int main() {
             cout << "Login using surname: \n";
             cin >> surname;
 
-            Client* currentClient = nullptr;
+            std::shared_ptr<Client> currentClient = nullptr;
 
-            currentClient = receptionist.findBySurname(&repo, surname);
+            currentClient = receptionist->findBySurname(repo, surname);
 
             if(currentClient == nullptr){
-                string name;
-                string email;
-                cout << "New user detected!\n";
-                cout << "Enter your name: \n";
-                cin >> name;
-                cout << "Enter your email: \n";
-                cin >> email;
-                currentClient = new Client(name, surname, email);
-                receptionist.recordClient(&repo, currentClient);
+                currentClient = receptionist->createClient(surname);
+                receptionist->recordClient(repo, currentClient);
             }
             else {
-                currentClient = receptionist.findBySurname(&repo, surname);
+                currentClient = receptionist->findBySurname(repo, surname);
             }
             
             cout << "1. Make Order\n";
@@ -127,25 +120,7 @@ int main() {
             cin >> choice;
 
             if (choice == 1) {
-                string description;
-                int year, month, day;
-
-                cout << "Enter order description: ";
-                cin >> description;
-
-                cout << "Enter deadline (YYYY MM DD): ";
-                cin >> year >> month >> day;
-
-                //time conversion
-                tm timeinfo = {};
-                timeinfo.tm_year = year - 1900;   //1900
-                timeinfo.tm_mon = month - 1;     //0-based
-                timeinfo.tm_mday = day;
-
-                time_t deadline = mktime(&timeinfo);
-                string deadlineStr = to_string(deadline);
-
-                Order* order = new Order(description, deadlineStr);
+                std::shared_ptr<Order> order = currentClient->createOrder();
 
                 int payChoice;
                 cout << "\nChoose Payment Method:\n";
@@ -156,15 +131,15 @@ int main() {
 
                 if (payChoice == 1) {
                     order->isPaid = true;
-                    receptionist.createTransaction(&repo, currentClient, order, card);
+                    receptionist->createTransaction(repo, currentClient, order, card);
                     cout << "Order is payed by Card." << endl;
                 }
                 else {
-                    receptionist.createTransaction(&repo, currentClient, order, cash);
+                    receptionist->createTransaction(repo, currentClient, order, cash);
                     cout << "Order will be paid by Cash at pickup." << endl;
                 }
 
-                receptionist.recordOrder(&repo, order);
+                receptionist->recordOrder(repo, order);
 
                 cout << "Order with id: " << order->orderId << " of price: " << order->getPrice() << " was created and saved.\n";
 
@@ -175,11 +150,11 @@ int main() {
                 cout << "Enter order id: ";
                 cin>>id;
 
-                if (repo.orders.empty()) {
+                if (repo->orders.empty()) {
                     cout << "No orders yet.\n";
                 }
                 else {
-                    receptionist.printOrderInfo(&repo, id);
+                    receptionist->printOrderInfo(repo, id);
                 }
             }
             else {
@@ -195,19 +170,19 @@ int main() {
             //od
             if (recchoice == 1) {
                 cout << "\n--- ORDERS ---\n";
-                for (auto& o : repo.orders) {
+                for (auto& o : repo->orders) {
                     cout << o.second->toString() << endl;
                 }
             }
             else if (recchoice == 2) {
                 cout << "\n--- CLIENTS ---\n";
-                for (auto& c : repo.clients) {
+                for (auto& c : repo->clients) {
                     cout << c.second->toString() << endl;
                 }
             }
             else if (recchoice == 3) {
                 cout << "\n--- TRANSACTIONS ---\n";
-                for (auto& t : repo.transactions) {
+                for (auto& t : repo->transactions) {
                     cout << t.second->toString() << endl;
                 }
             }
@@ -224,7 +199,7 @@ int main() {
             //od
             if (phchoice == 1) {
                 cout << "\n--- ASSIGNED ORDERS ---\n";
-                for (auto& o : repo.orders) {
+                for (auto& o : repo->orders) {
                     cout << "ID: " << o.first << " | " << o.second->toString() << endl;
                 }
             }
@@ -233,8 +208,8 @@ int main() {
                 cout << "Enter Order ID to finish: ";
                 cin >> id;
 
-                if (repo.orders.find(id) != repo.orders.end()) {
-                    repo.orders[id]->isFinished = true; 
+                if (repo->orders.find(id) != repo->orders.end()) {
+                    repo->orders[id]->isFinished = true; 
                     cout << "Order marked as completed.\n";
                 }
                 else {

@@ -1,21 +1,43 @@
 #include "Client.h"
+#include "Order.h"
 
-Client::Client(string name, string surname, string email) : name(name), surname(surname), email(email)
+Client::Client(string name, string surname, string email)
 {
+    this->name = name;
+    this->surname = surname;
+    this->email = email;
 }
 
-void Client::createOrder()
+std::shared_ptr<Order> Client::createOrder()
 {
-string orderDescription;
-cin>>orderDescription;
-string FinishTillst;
-    cin>>FinishTillst;
-Order order(orderDescription, FinishTillst);
+    std::string description;
+    int year, month, day;
+
+    cout << "Enter order description: ";
+    cin >> description;
+
+    cout << "Enter deadline (YYYY MM DD): ";
+    cin >> year >> month >> day;
+
+    //time conversion
+    tm timeinfo = {};
+    timeinfo.tm_year = year - 1900;   //1900
+    timeinfo.tm_mon = month - 1;     //0-based
+    timeinfo.tm_mday = day;
+
+    time_t deadline = mktime(&timeinfo);
+    std::string deadlineStr = to_string(deadline);
+
+    std::shared_ptr<Order> order(new Order(description, deadlineStr));
+
+    return order;
 }
 
-void Client::payOrder(Order order)
+void Client::payOrder(std::shared_ptr<Order> order)
 {
-    order.isPaid = true;
+    if (order) {
+        order->isPaid = true;
+    }
 }
 
 string Client::toString()
@@ -56,3 +78,4 @@ Client::~Client()
 {
 
 }
+

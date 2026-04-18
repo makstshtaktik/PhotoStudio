@@ -11,7 +11,7 @@ void Photographer::performOrder(Order order)
 
 }
 
-void Photographer::useConsumables(std::vector<Consumables *> consumable)
+void Photographer::useConsumables(std::vector<std::shared_ptr<Consumables>> consumable)
 {
     consumable.clear();
 }
