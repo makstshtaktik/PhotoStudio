@@ -34,5 +34,6 @@ void printPhotographerInfo(std::shared_ptr<Repo> repo, int id);
 void createConsumable(std::shared_ptr<Repo> repo);
 void addConsumable(std::shared_ptr<Repo> repo, std::shared_ptr<Consumables> consumable);
 void removeConsumable(std::shared_ptr<Repo> repo, string consumablename);
+void adminChoicehandler(std::shared_ptr<Repo> repo, int admchoice);
 };
 #endif

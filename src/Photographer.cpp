@@ -44,3 +44,25 @@ void Photographer::setName(string name)
 string Photographer::toString() {
     return "Name: " + name + " " + "Surname: " + surname;
 }
+
+void Photographer::PhotographerHandler(std::shared_ptr<Repo> repo, int phchoice) {
+    if (phchoice == 1) {
+        cout << "\n--- ASSIGNED ORDERS ---\n";
+        for (auto& o : repo->orders) {
+            cout << "ID: " << o.first << " | " << o.second->toString() << endl;
+        }
+    }
+    else if (phchoice == 2) {
+        int id;
+        cout << "Enter Order ID to finish: ";
+        cin >> id;
+
+        if (repo->orders.find(id) != repo->orders.end()) {
+            repo->orders[id]->isFinished = true;
+            cout << "Order marked as completed.\n";
+        }
+        else {
+            cout << "Order not found.\n";
+        }
+    }
+}

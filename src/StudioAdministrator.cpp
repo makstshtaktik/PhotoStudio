@@ -138,3 +138,40 @@ void StudioAdministrator::removeConsumable(std::shared_ptr<Repo> repo, string co
     );
 }
 
+void StudioAdministrator::adminChoicehandler(std::shared_ptr<Repo> repo, int admchoice) {
+    if (admchoice == 1) {
+        cout << "\n--- PHOTOGRAPHERS ---\n";
+        for (auto& p : repo->photographers) {
+            cout << p.second->toString() << endl;
+        }
+    }
+    else if (admchoice == 2) {
+        cout << "\n--- RECEPTIONISTS ---\n";
+        for (auto& r : repo->receptionists) {
+            cout << r.second->toString() << endl;
+        }
+    }
+    else if (admchoice == 3) {
+        cout << "\n--- ADD RECEPTIONISTS ---\n";
+        createreceptionist(repo);
+
+    }
+    else if (admchoice == 4) {
+        cout << "\n--- ADD PHOTOGRAPHER ---\n";
+        createphotographer(repo);
+    }
+    else if (admchoice == 5) {
+        cout << "\n--- ADD CONSUMABLE ---\n";
+        createConsumable(repo);
+    }
+    else if (admchoice == 6) {
+        string param;
+        cout << "\n--- REMOVE CONSUMABLE ---\n";
+        cout << "Enter consumable name: \n";
+        cin >> param;
+        removeConsumable(repo, param);
+    }
+    else {
+        cout << "Invalid choice.\n";
+    }
+}

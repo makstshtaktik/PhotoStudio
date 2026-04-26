@@ -35,5 +35,6 @@ void printClientInfo(std::shared_ptr<Repo> repo, int id);
 void printTransactionInfo(std::shared_ptr<Repo> repo, int id);
 void createTransaction(std::shared_ptr<Repo> repo, std::shared_ptr<Client> client, std::shared_ptr<Order> order, PayMode paymode);
 std::shared_ptr<Client> createClient(string clientSurname);
+void receptionistHandler(std::shared_ptr<Repo> repo, int recchoice);
 };
 #endif

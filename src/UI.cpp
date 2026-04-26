@@ -52,7 +52,6 @@ void UI::run() {
         cout << "Choose an option: ";
         cin >> mainchoice;
 
-        //od
         if (mainchoice == 1) {
             cout << "1. Show Photographers\n";
             cout << "2. Show Receptionists\n";
@@ -61,42 +60,7 @@ void UI::run() {
             cout << "5. Add Consumables\n";
             cout << "6. Remove Consumables\n";
             cin >> admchoice;
-            if (admchoice == 1) {
-                cout << "\n--- PHOTOGRAPHERS ---\n";
-                for (auto& p : repo->photographers) {
-                    cout << p.second->toString() << endl;
-                }
-            }
-            else if (admchoice == 2) {
-                cout << "\n--- RECEPTIONISTS ---\n";
-                for (auto& r : repo->receptionists) {
-                    cout << r.second->toString() << endl;
-                }
-            }
-            else if (admchoice == 3) {
-                cout << "\n--- ADD RECEPTIONISTS ---\n";
-                admin->createreceptionist(repo);
-
-            }
-            else if (admchoice == 4) {
-                cout << "\n--- ADD PHOTOGRAPHER ---\n";
-                admin->createphotographer(repo);
-            }
-            else if (admchoice == 5) {
-                cout << "\n--- ADD CONSUMABLE ---\n";
-                admin->createConsumable(repo);
-            }
-            else if (admchoice == 6) {
-                string param;
-                cout << "\n--- REMOVE CONSUMABLE ---\n";
-                cout << "Enter consumable name: \n";
-                cin >> param;
-                admin->removeConsumable(repo, param);
-            }
-            else {
-                cout << "Invalid choice.\n";
-            }
-            //do
+            admin->adminChoicehandler(repo, admchoice);
         }
 
         else if (mainchoice == 2) {
@@ -165,61 +129,18 @@ void UI::run() {
             }
         }
         else if (mainchoice == 3) {
+       
             cout << "1. Show Orders\n";
             cout << "2. Show Clients\n";
             cout << "3. Show Transactions\n";
             cin >> recchoice;
-
-            //od
-            if (recchoice == 1) {
-                cout << "\n--- ORDERS ---\n";
-                for (auto& o : repo->orders) {
-                    cout << o.second->toString() << endl;
-                }
-            }
-            else if (recchoice == 2) {
-                cout << "\n--- CLIENTS ---\n";
-                for (auto& c : repo->clients) {
-                    cout << c.second->toString() << endl;
-                }
-            }
-            else if (recchoice == 3) {
-                cout << "\n--- TRANSACTIONS ---\n";
-                for (auto& t : repo->transactions) {
-                    cout << t.second->toString() << endl;
-                }
-            }
-            else {
-                cout << "Invalid choice.\n";
-            }
-            //do
+            receptionist->receptionistHandler(repo, recchoice);
         }
         else if (mainchoice == 4) {
             cout << "1. Show Orders\n";
             cout << "2. Finish Orders\n";
             cin >> phchoice;
-
-            //od
-            if (phchoice == 1) {
-                cout << "\n--- ASSIGNED ORDERS ---\n";
-                for (auto& o : repo->orders) {
-                    cout << "ID: " << o.first << " | " << o.second->toString() << endl;
-                }
-            }
-            else if (phchoice == 2) {
-                int id;
-                cout << "Enter Order ID to finish: ";
-                cin >> id;
-
-                if (repo->orders.find(id) != repo->orders.end()) {
-                    repo->orders[id]->isFinished = true;
-                    cout << "Order marked as completed.\n";
-                }
-                else {
-                    cout << "Order not found.\n";
-                }
-                //do
-            }
+            photographer->PhotographerHandler(repo, phchoice);
             
         }
         else if (mainchoice == 5) {
