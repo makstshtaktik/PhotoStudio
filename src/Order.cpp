@@ -34,7 +34,7 @@ std::string Order::toString()
     std::string dateStr(buffer);
 
     tm* timeinfo2 = localtime(&OrderTime);
-    strftime(buffer, sizeof(buffer), "%Y-%m-%d", timeinfo);
+    strftime(buffer, sizeof(buffer), "%Y-%m-%d", timeinfo2);
     std::string dateStr1(buffer);
 
     return "\nOrder: " + orderDescription +
@@ -56,5 +56,8 @@ Order::Order(std::string orderDescription, double price, bool isFinished, bool i
     this ->FinishTill = FinishTill;
 	this ->OrderTime = OrderTime;
     this ->isPaid = isPaid;
-    this ->FinishTill = FinishTill;
+}
+
+std::string Order::getType() {
+    return "Base";
 }

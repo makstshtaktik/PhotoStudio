@@ -1,5 +1,7 @@
 #include "Client.h"
 #include "Order.h"
+#include "PhotoPrinting.h"
+#include "FilmDeveloping.h"
 
 Client::Client(string name, string surname, string email)
 {
@@ -11,10 +13,11 @@ Client::Client(string name, string surname, string email)
 std::shared_ptr<Order> Client::createOrder()
 {
     std::string description;
-    int year, month, day;
+    int year, month, day, typechoice{};
 
     cout << "Enter order description: ";
-    cin >> description;
+    cin.ignore();
+    getline(cin, description);
 
     cout << "Enter deadline (YYYY MM DD): ";
     cin >> year >> month >> day;
@@ -28,9 +31,34 @@ std::shared_ptr<Order> Client::createOrder()
     time_t deadline = mktime(&timeinfo);
     std::string deadlineStr = to_string(deadline);
 
-    std::shared_ptr<Order> order(new Order(description, deadlineStr));
+    std::string dateStr = [&timeinfo]() {
+        char buffer[20];
+        strftime(buffer, sizeof(buffer), "%Y-%m-%d", &timeinfo);
+        return std::string(buffer);
+        }();
 
-    return order;
+    cout << "Choose order type:\n";
+    cout << "1. Photo Printing\n";
+    cout << "2. Film developing\n";
+	cin >> typechoice;
+    if (typechoice == 1) {
+		int photoSize;
+		cout << "Enter photo size (in cm): ";
+		cin >> photoSize;
+
+        std::shared_ptr<Order> order(new PhotoPrinting(description, dateStr, photoSize));
+        return order;
+    }
+	else if (typechoice == 2) {
+        int filmSize;
+        cout << "Enter film length (in cm): ";
+        cin >> filmSize;
+        std::shared_ptr<Order> order(new FilmDeveloping(description, dateStr, filmSize));
+        return order;
+    }
+    else {
+        cout << "Invalid choice.\n";
+    }
 }
 
 void Client::payOrder(std::shared_ptr<Order> order)

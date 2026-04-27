@@ -67,7 +67,8 @@ void UI::run() {
             string surname;
 
             cout << "Login using surname: \n";
-            cin >> surname;
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            getline(cin, surname);
 
             std::shared_ptr<Client> currentClient = nullptr;
 
@@ -129,12 +130,7 @@ void UI::run() {
             }
         }
         else if (mainchoice == 3) {
-       
-            cout << "1. Show Orders\n";
-            cout << "2. Show Clients\n";
-            cout << "3. Show Transactions\n";
-            cin >> recchoice;
-            receptionist->receptionistHandler(repo, recchoice);
+            receptionist->receptionistHandler(repo);
         }
         else if (mainchoice == 4) {
             cout << "1. Show Orders\n";

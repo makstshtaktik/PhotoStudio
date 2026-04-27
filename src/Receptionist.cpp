@@ -105,7 +105,8 @@ std::shared_ptr<Client> Receptionist::createClient(string clientSurname) {
     return Cl;
 }
 
-void Receptionist::receptionistHandler(std::shared_ptr<Repo> repo, int recchoice) {
+void Receptionist::receptionistHandler(std::shared_ptr<Repo> repo) {
+    int recchoice;
     cout << "1. Show Orders\n";
     cout << "2. Show Clients\n";
     cout << "3. Show Transactions\n";

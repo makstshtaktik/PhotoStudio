@@ -8,6 +8,8 @@
 #include <iostream>
 #include "Order.h"
 #include "Client.h"
+#include "FilmDeveloping.h"
+#include "PhotoPrinting.h"
 #include <memory>
 
 class Client;
@@ -47,15 +49,16 @@ Repo(){
 }
 void loadOrders() {
     std::ifstream in(orderFile);
-    std::string token;
     if (!in.is_open()) return;
-    int id = std::stoi(token);
     
     std::string line;
     while (std::getline(in, line)) {
         std::stringstream ss(line);
-        std::getline(ss, token, '|');
-        std::string desc = token;
+        std::string token, idStr, type, desc;
+
+        std::getline(ss, idStr, '|');
+        std::getline(ss, type, '|');
+        std::getline(ss, desc, '|');
 
         std::getline(ss, token, '|');
         double price = std::stod(token);
@@ -75,6 +78,24 @@ void loadOrders() {
         std::getline(ss, token, '|');
         bool paid = (token == "1");
 
+        std::shared_ptr<Order> newOrder = nullptr;
+
+        if (type == "Photo") {
+            std::getline(ss, token, '|');
+            int size = std::stoi(token);
+            newOrder = std::make_shared<PhotoPrinting>(desc, price, finished, finishTill, orderTime, paid, size);
+        }
+        if (type == "Film") {
+            std::getline(ss, token, '|');
+            int length = std::stoi(token);
+            newOrder = std::make_shared<FilmDeveloping>(desc, price, finished, finishTill, orderTime, paid, length);
+        }
+    else {
+        auto o = std::make_shared<Order>(desc, price, finished, urgent, finishTill, orderTime, paid);
+    }
+        int id = std::stoi(idStr);
+        orders[id] = newOrder;
+
         if (id >= counter) counter = id + 1;
     }
 }
@@ -82,7 +103,7 @@ void loadClients() {
 
 }
 void saveOrder(std::shared_ptr<Order> o) {
-    orders[counter] = o;
+    
     std::ofstream out(orderFile, std::ios::app);
     out << counter << "|" << o->orderDescription << "|"
         << o->getPrice() << "|"
@@ -91,7 +112,14 @@ void saveOrder(std::shared_ptr<Order> o) {
         << o->FinishTill << "|"
         << o->OrderTime << "|"
         << o->isPaid << "\n";
-    out.close();
+    if (auto p = std::dynamic_pointer_cast<PhotoPrinting>(o)) {
+        out << "|" << p->getPhotoSize();
+    }
+    else if (auto f = std::dynamic_pointer_cast<FilmDeveloping>(o)) {
+        out << "|" << f->getFilmLength();
+    }
+    out << "\n";
+    orders[counter] = o;
     counter++;
 }
 //TBA: Clients, Consumables, Reports, Transactions, Photographers, Receptionists

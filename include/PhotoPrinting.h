@@ -11,7 +11,9 @@ class PhotoPrinting: public Order{
 public:
     int getPhotoSize();
     void setPhotoSize(int photoSize);
-PhotoPrinting(int photoSize);
+PhotoPrinting(string desc, string deadline, int photoSize);
+std::string getType() override;
+PhotoPrinting(string orderDescription, int price, bool isFinished, time_t FinishTill, time_t OrderTime, bool isPaid, int photoSize);
 string toString() override;
 };
 #endif

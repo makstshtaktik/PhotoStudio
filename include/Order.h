@@ -24,5 +24,6 @@ Order(std::string orderDescription, double price, bool isFinished, bool isUrgent
 virtual std::string toString();
 double getPrice();
 Order(std::string orderDescription, std::string FinishTill);
+virtual std::string getType();
 };
 #endif
