@@ -15,7 +15,7 @@ string getDescription();
 void setReportId(int reportId);
 void setDescription(string description);
 Report(int reportId, string description);
-~Report();
+~Report() = default;
 string toString();
 };
 #endif

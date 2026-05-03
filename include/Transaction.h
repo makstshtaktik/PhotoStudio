@@ -23,9 +23,9 @@ private:
     std::shared_ptr<Client> client;
     std::shared_ptr<Order> order;
     time_t transactionDate;
-    PayMode paymode;
 
 public:
+    PayMode paymode;
     Transaction(int id, std::shared_ptr<Client> c, std::shared_ptr<Order> o, PayMode method);
 
     // Getters

@@ -2,13 +2,13 @@
 #include <memory>
 #include <vector>
 
-#include "Order.h"
-#include "Consumables.h"
 using namespace std;
 #ifndef PHOTOGRAPHER_H
 
 #define PHOTOGRAPHER_H
 class Order;
+class Repo;
+class Consumables;
 
 class Photographer{
 string name;

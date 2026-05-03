@@ -50,7 +50,12 @@ void UI::run() {
         cout << "4. Login as photographer\n";
         cout << "5. Exit program\n";
         cout << "Choose an option: ";
-        cin >> mainchoice;
+        if (!(cin >> mainchoice)) {
+            cout << "Please enter a valid number.\n";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            continue;
+        }
 
         if (mainchoice == 1) {
             cout << "1. Show Photographers\n";
@@ -68,7 +73,15 @@ void UI::run() {
 
             cout << "Login using surname: \n";
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            
             getline(cin, surname);
+            
+            if(cin.fail()) {
+                cout << "Input error. Please type in letters.\n";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                continue;
+			}
 
             std::shared_ptr<Client> currentClient = nullptr;
 
@@ -89,6 +102,7 @@ void UI::run() {
 
             if (choice == 1) {
                 std::shared_ptr<Order> order = currentClient->createOrder();
+				repo->saveOrder(order);
 
                 int payChoice;
                 cout << "\nChoose Payment Method:\n";

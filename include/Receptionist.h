@@ -1,15 +1,15 @@
 #pragma once
 #include <iostream>
 #include <memory>
-
-#include "Order.h"
-#include "Client.h"
+#include <map>
+#include <string>
 #include "Transaction.h"
-#include "Repo.h"
+
 using namespace std;
 
 #ifndef RECEPTIONIST_H
 #define RECEPTIONIST_H
+class Repo;
 class Order;
 class Client;
 class Transaction;

@@ -17,6 +17,7 @@ void StudioAdministrator::account(std::vector<std::shared_ptr<Consumables>> cons
 
 void StudioAdministrator::recordphotographer(std::shared_ptr<Repo> repo, std::shared_ptr<Photographer> photographer)
 {
+    std::lock_guard<std::mutex> lock(repo->repoMutex);
     repo->photographers[repo->counterph] = photographer;
     repo->counterph++;
 }
@@ -51,6 +52,7 @@ Photographer StudioAdministrator::findPhotographer(std::map<int, std::shared_ptr
 
 void StudioAdministrator::recordreceptionist(std::shared_ptr<Repo> repo, std::shared_ptr<Receptionist> receptionist)
 {
+    std::lock_guard<std::mutex> lock(repo->repoMutex);
     repo->receptionists[repo->counterrp] = receptionist;
     repo->counterrp++;
 }
@@ -127,12 +129,13 @@ void StudioAdministrator::createConsumable(std::shared_ptr<Repo> repo)
 
 void StudioAdministrator::addConsumable(std::shared_ptr<Repo> repo, std::shared_ptr<Consumables> consumable)
 {
+    std::lock_guard<std::mutex> lock(repo->repoMutex);
     repo->consumables.push_back(consumable);
 }
 
 void StudioAdministrator::removeConsumable(std::shared_ptr<Repo> repo, string consumablename)
 {
-
+    std::lock_guard<std::mutex> lock(repo->repoMutex);
     repo->consumables.erase(std::remove_if(repo->consumables.begin(), repo->consumables.end(), [&](std::shared_ptr<Consumables> c) { return c->getName() == consumablename; }),
         repo->consumables.end()
     );

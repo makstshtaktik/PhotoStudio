@@ -1,5 +1,8 @@
 #include "Receptionist.h"
 #include "Repo.h"
+#include "Order.h"        // Required to call o->toString()
+#include "Client.h"       // Required to access c->surname or c->toString()
+#include "Transaction.h"  // Required to call t->toString()
 #include <numeric>
 #include <functional>
 #include <algorithm>
@@ -12,16 +15,19 @@ Receptionist::Receptionist(string name, string surname): name(name), surname(sur
 }
 
 void Receptionist::recordOrder(std::shared_ptr<Repo> repo, std::shared_ptr<Order> order) {
+    std::lock_guard<std::mutex> lock(repo->repoMutex);
     repo->orders[repo->counter] = order;
     repo->counter++;
 }
 
 void Receptionist::recordClient(std::shared_ptr<Repo> repo, std::shared_ptr<Client> client) {
+    std::lock_guard<std::mutex> lock(repo->repoMutex);
     repo->clients[repo->countercl] = client;
     repo->countercl++;
 }
 
 void Receptionist::recordTransaction(std::shared_ptr<Repo> repo, std::shared_ptr<Transaction> transaction) {
+    std::lock_guard<std::mutex> lock(repo->repoMutex);
     repo->transactions[repo->countertr] = transaction;
     repo->countertr++;
 }
@@ -71,7 +77,12 @@ std::shared_ptr<Client> Receptionist::findBySurname(std::shared_ptr<Repo> repo, 
 void Receptionist::printOrderInfo(std::shared_ptr<Repo> repo, int id)
 {
     std::shared_ptr<Order> o = findOrders(repo->orders, id);
-    cout << "Order with id: " << id << " is: " << o->toString() << endl;
+    if (o) {
+        cout << "Order ID " << id << ": " << o->toString() << endl;
+    }
+    else {
+        cout << "Error: Order ID " << id << " not found." << endl;
+    }
 }
 
 void Receptionist::printClientInfo(std::shared_ptr<Repo> repo, int id)
@@ -112,6 +123,7 @@ void Receptionist::receptionistHandler(std::shared_ptr<Repo> repo) {
     cout << "3. Show Transactions\n";
     cin >> recchoice;
 
+    std::lock_guard<std::mutex> lock(repo->repoMutex);
     //od
     if (recchoice == 1) {
         cout << "\n--- ORDERS ---\n";
