@@ -1,8 +1,8 @@
 #include "Receptionist.h"
 #include "Repo.h"
-#include "Order.h"        // Required to call o->toString()
-#include "Client.h"       // Required to access c->surname or c->toString()
-#include "Transaction.h"  // Required to call t->toString()
+#include "Order.h"
+#include "Client.h"
+#include "Transaction.h"
 #include <numeric>
 #include <functional>
 #include <algorithm>
@@ -35,6 +35,14 @@ void Receptionist::recordTransaction(std::shared_ptr<Repo> repo, std::shared_ptr
 string Receptionist::toString()
 {
     return "Name: " + name + " " + "Surname: " + surname;
+}
+
+string Receptionist::getName() {
+    return name;
+}
+
+string Receptionist::getSurname() {
+    return surname;
 }
 
 std::shared_ptr<Order> Receptionist::findOrders(std::map<int, std::shared_ptr<Order>> orders, int keyval) {

@@ -131,6 +131,12 @@ void UI::run() {
                 int id;
                 cout << "Enter order id: ";
                 cin >> id;
+                if (cin.fail()) {
+                    cout << "Input error. Please type in numbers.\n";
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    continue;
+                }
 
                 if (repo->orders.empty()) {
                     cout << "No orders yet.\n";
@@ -141,6 +147,7 @@ void UI::run() {
             }
             else {
                 cout << "Invalid choice.\n";
+                continue;
             }
         }
         else if (mainchoice == 3) {
@@ -150,6 +157,13 @@ void UI::run() {
             cout << "1. Show Orders\n";
             cout << "2. Finish Orders\n";
             cin >> phchoice;
+            if (cin.fail()) {
+                cout << "Input error. Please type in numbers.\n";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                continue;
+            }
+
             photographer->PhotographerHandler(repo, phchoice);
             
         }

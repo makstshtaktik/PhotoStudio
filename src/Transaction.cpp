@@ -7,6 +7,14 @@ Transaction::Transaction(int id, std::shared_ptr<Client> c, std::shared_ptr<Orde
     this->transactionDate = time(NULL);
 }
 
+std::shared_ptr<Client> Transaction::getClient() {
+    return client;
+}
+
+std::shared_ptr<Order> Transaction::getOrder() {
+    return order;
+}
+
 int Transaction::getTransactionId() {
     return transactionId;
 }

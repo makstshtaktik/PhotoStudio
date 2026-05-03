@@ -2,8 +2,8 @@
 #include <iostream>
 #include <string>
 #include <ctime>
+#include <memory>
 
-// Forward declarations to avoid circular includes
 class Client;
 class Order;
 
@@ -28,19 +28,18 @@ public:
     PayMode paymode;
     Transaction(int id, std::shared_ptr<Client> c, std::shared_ptr<Order> o, PayMode method);
 
-    // Getters
     int getTransactionId();
     int getPaymentMethod();
+
+    std::shared_ptr<Client> getClient();
+    std::shared_ptr<Order> getOrder();
 
     void setTransactionId(int tid);
     void setPaymentMethod(PayMode pm);
 
-    // Display function
     string toString();
 
     ~Transaction();
-
-
 };
 
 #endif

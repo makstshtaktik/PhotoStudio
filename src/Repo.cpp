@@ -39,10 +39,6 @@ void Repo::loadOrders() {
             if (!std::getline(ss, idStr, '|') || !std::getline(ss, type, '|') || !std::getline(ss, desc, '|'))
                 throw std::runtime_error("Malformed line header");
 
-            std::getline(ss, idStr, '|');
-            std::getline(ss, type, '|');
-            std::getline(ss, desc, '|');
-
             std::getline(ss, token, '|');
             double price = std::stod(token);
 
@@ -74,7 +70,7 @@ void Repo::loadOrders() {
                 newOrder = std::make_shared<FilmDeveloping>(desc, price, finished, finishTill, orderTime, paid, length);
             }
             else {
-                auto o = std::make_shared<Order>(desc, price, finished, urgent, finishTill, orderTime, paid);
+                newOrder = std::make_shared<Order>(desc, price, finished, urgent, finishTill, orderTime, paid);
             }
             int id = std::stoi(idStr);
             orders[id] = newOrder;
@@ -103,30 +99,7 @@ void Repo::loadClients() {
         if (id >= countercl) countercl = id + 1;
     }
 }
-void Repo::saveOrder(std::shared_ptr<Order> o) {
-    std::ofstream out(orderFile, std::ios::app);
 
-    out << counter << "|"
-        << o->getType() << "|"
-        << o->orderDescription << "|"
-        << o->getPrice() << "|"
-        << o->isFinished << "|"
-        << o->isUrgent << "|"
-        << o->FinishTill << "|"
-        << o->OrderTime << "|"
-        << o->isPaid;
-
-    if (auto p = std::dynamic_pointer_cast<PhotoPrinting>(o)) {
-        out << "|" << p->getPhotoSize();
-    }
-    else if (auto f = std::dynamic_pointer_cast<FilmDeveloping>(o)) {
-        out << "|" << f->getFilmLength();
-    }
-
-    out << "\n";
-    orders[counter] = o;
-    counter++;
-}
 void Repo::loadConsumables() {
     std::ifstream in(consumableFile);
     std::string line;
@@ -196,6 +169,119 @@ void Repo::loadReports() {
         int id = std::stoi(idStr);
         reports.push_back(std::make_shared<Report>(id, desc));
         if (id >= counterrp) counterrp = id + 1;
+    }
+}
+
+void Repo::saveOrder(std::shared_ptr<Order> o) {
+    std::lock_guard<std::mutex> lock(repoMutex);
+    std::ofstream out(orderFile, std::ios::app);
+
+    out << counter << "|"
+        << o->getType() << "|"
+        << o->orderDescription << "|"
+        << o->getPrice() << "|"
+        << o->isFinished << "|"
+        << o->isUrgent << "|"
+        << o->FinishTill << "|"
+        << o->OrderTime << "|"
+        << o->isPaid;
+
+    if (auto p = std::dynamic_pointer_cast<PhotoPrinting>(o)) {
+        out << "|" << p->getPhotoSize();
+    }
+    else if (auto f = std::dynamic_pointer_cast<FilmDeveloping>(o)) {
+        out << "|" << f->getFilmLength();
+    }
+
+    out << "\n";
+    orders[counter] = o;
+    counter++;
+}
+void Repo::saveTransaction(std::shared_ptr<Transaction> t) {
+    std::lock_guard<std::mutex> lock(repoMutex);
+
+    std::ofstream out(transactionFile, std::ios::app);
+    if (out.is_open()) {
+        int cId = -1, oId = -1;
+
+        for (auto const& pair : clients) {
+            int id = pair.first;
+            auto ptr = pair.second;
+            if (ptr == t->getClient()) {
+                cId = id;
+                break;
+            }
+        }
+
+        for (auto const& pair : orders) {
+            int id = pair.first;
+            auto ptr = pair.second;
+            if (ptr == t->getOrder()) {
+                oId = id;
+                break;
+            }
+        }
+
+        out << t->getTransactionId() << "|"
+            << cId << "|"
+            << oId << "|"
+            << t->getPaymentMethod() << "\n";
+
+        transactions[t->getTransactionId()] = t;
+        if (t->getTransactionId() >= countertr) {
+            countertr = t->getTransactionId() + 1;
+        }
+    }
+}
+
+void Repo::saveConsumable(std::shared_ptr<Consumables> c) {
+    std::lock_guard<std::mutex> lock(repoMutex);
+    std::ofstream out(consumableFile, std::ios::app);
+    if (out.is_open()) {
+        out << c->getName() << "|" << c->getQuantity() << "|" << c->getPrice() << "\n";
+        consumables.push_back(c);
+    }
+}
+
+void Repo::saveClient(std::shared_ptr<Client> c) {
+    std::lock_guard<std::mutex> lock(repoMutex);
+    std::ofstream out(clientFile, std::ios::app);
+    if (out.is_open()) {
+        out << countercl << "|" << c->getName() << "|" << c->getSurname() << "|" << c->getEmail() << "\n";
+        clients[countercl] = c;
+        countercl++;
+    }
+}
+
+void Repo::savePhotographer(std::shared_ptr<Photographer> p) {
+    std::lock_guard<std::mutex> lock(repoMutex);
+    std::ofstream out(photographerFile, std::ios::app);
+    if (out.is_open()) {
+        out << counterph << "|" << p->getName() << "|" << p->getSurname() << "\n";
+        photographers[counterph] = p;
+        counterph++;
+    }
+}
+
+void Repo::saveReceptionist(std::shared_ptr<Receptionist> r) {
+    std::lock_guard<std::mutex> lock(repoMutex);
+    std::ofstream out(receptionistFile, std::ios::app);
+    if (out.is_open()) {
+        out << counterrec << "|" << r->getName() << "|" << r->getSurname() << "\n";
+        receptionists[counterrec] = r;
+        counterrec++;
+    }
+}
+
+void Repo::saveReport(std::shared_ptr<Report> r) {
+    std::lock_guard<std::mutex> lock(repoMutex);
+    std::ofstream out(reportFile, std::ios::app);
+    if (out.is_open()) {
+        out << r->getReportId() << "|" << r->getDescription() << "\n";
+        reports.push_back(r);
+        if (r->getReportId() >= counterrp) {
+            counterrp = r->getReportId() + 1;
+        }
     }
 }
 

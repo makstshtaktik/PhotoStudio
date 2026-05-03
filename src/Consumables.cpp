@@ -1,7 +1,3 @@
-//
-// Created by Admin on 21.02.2026.
-//
-
 #include "Consumables.h"
 #include "Client.h"
 #include "Repo.h"

@@ -26,6 +26,8 @@ void recordOrder(std::shared_ptr<Repo> repo, std::shared_ptr<Order> order);
 void recordClient(std::shared_ptr<Repo> repo, std::shared_ptr<Client> client);
 void recordTransaction(std::shared_ptr<Repo> repo, std::shared_ptr<Transaction> transaction);
 string toString();
+string getName();
+string getSurname();
 std::shared_ptr<Order> findOrders(std::map<int, std::shared_ptr<Order>> orders, int keyval);
 std::shared_ptr<Client> findClients(std::map<int, std::shared_ptr<Client>> clients, int keyval);
 std::shared_ptr<Transaction> findTransactions(std::map<int, std::shared_ptr<Transaction>> transactions, int keyval);

@@ -14,7 +14,7 @@ std::shared_ptr<Order> Client::createOrder()
 {
     try {
         std::string description;
-        int year, month, day, typechoice{};
+        int year{0}, month{0}, day{0}, typechoice{0};
 
         cout << "Enter order description: ";
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
