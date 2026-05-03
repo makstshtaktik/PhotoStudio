@@ -13,6 +13,7 @@ add_executable(PhotoStudio
         src/Receptionist.cpp
         src/Report.cpp
         src/StudioAdministrator.cpp
+        src/Repo.cpp
         src/main.cpp
 
  "include/Transaction.h" "src/Transaction.cpp" "include/UI.h" "src/UI.cpp")
