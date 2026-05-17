@@ -22,6 +22,6 @@ Photographer(string name, string surname);
 void performOrder(Order order);
 void useConsumables(std::vector<std::shared_ptr<Consumables>> consumables);
 string toString();
-void PhotographerHandler(std::shared_ptr<Repo> repo, int phchoice);
+bool completeOrder(std::shared_ptr<Repo> repo, int orderId);
 };
 #endif

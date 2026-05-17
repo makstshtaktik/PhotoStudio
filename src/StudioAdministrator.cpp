@@ -66,38 +66,18 @@ Receptionist StudioAdministrator::findReceptionist(std::map<int, std::shared_ptr
     }
 }
 
-void StudioAdministrator::createphotographer(std::shared_ptr<Repo> repo)
+void StudioAdministrator::createphotographer(std::shared_ptr<Repo> repo, string name, string surname)
 {
-    string name, surname;
-
-    cout << "Enter photographer name: ";
-    cin >> name;
-
-    cout << "Enter photographer surname: ";
-    cin >> surname;
-
-    std::shared_ptr<Photographer> photographer = make_shared<Photographer>(name, surname);
-
-	recordphotographer(repo, photographer);
-
-    cout << "Photographer added successfully!\n";
+    std::lock_guard<std::mutex> lock(repo->repoMutex);
+    auto photographer = std::make_shared<Photographer>(name, surname);
+    repo->savePhotographer(photographer);
 }
 
-void StudioAdministrator::createreceptionist(std::shared_ptr<Repo> repo)
+void StudioAdministrator::createreceptionist(std::shared_ptr<Repo> repo, string name, string surname)
 {
-    string name, surname;
-
-    cout << "Enter receptionist name: ";
-    cin >> name;
-
-    cout << "Enter receptionist surname: ";
-    cin >> surname;
-
-    std::shared_ptr<Receptionist> receptionist = make_shared<Receptionist>(name, surname);
-
-    recordreceptionist(repo, receptionist);
-
-    cout << "Receptionist added successfully!\n";
+    std::lock_guard<std::mutex> lock(repo->repoMutex);
+    auto receptionist = std::make_shared<Receptionist>(name, surname);
+    repo->saveReceptionist(receptionist);
 }
 
 void StudioAdministrator::printReceptionistInfo(std::shared_ptr<Repo> repo, int id)
@@ -112,19 +92,13 @@ void StudioAdministrator::printPhotographerInfo(std::shared_ptr<Repo> repo, int 
     cout << "Photographer with id: " << id << " is: " << p.toString() << endl;
 }
 
-void StudioAdministrator::createConsumable(std::shared_ptr<Repo> repo)
+void StudioAdministrator::createConsumable(std::shared_ptr<Repo> repo, string name, int quantity, int price)
 {
-    string name;
-    int quantity, price;
-    cout << "Enter name: " << endl;
-    cin >> name;
-    cout << "Enter quantity: " << endl;
-    cin >> quantity;
-    cout << "Enter price: " << endl;
-    cin >> price;
+    std::lock_guard<std::mutex> lock(repo->repoMutex);
     std::shared_ptr<Consumables> c = make_shared<Consumables>(Consumables(name, quantity, price));
     addConsumable(repo, c);
 }
+
 
 
 void StudioAdministrator::addConsumable(std::shared_ptr<Repo> repo, std::shared_ptr<Consumables> consumable)
@@ -139,42 +113,4 @@ void StudioAdministrator::removeConsumable(std::shared_ptr<Repo> repo, string co
     repo->consumables.erase(std::remove_if(repo->consumables.begin(), repo->consumables.end(), [&](std::shared_ptr<Consumables> c) { return c->getName() == consumablename; }),
         repo->consumables.end()
     );
-}
-
-void StudioAdministrator::adminChoicehandler(std::shared_ptr<Repo> repo, int admchoice) {
-    if (admchoice == 1) {
-        cout << "\n--- PHOTOGRAPHERS ---\n";
-        for (auto& p : repo->photographers) {
-            cout << p.second->toString() << endl;
-        }
-    }
-    else if (admchoice == 2) {
-        cout << "\n--- RECEPTIONISTS ---\n";
-        for (auto& r : repo->receptionists) {
-            cout << r.second->toString() << endl;
-        }
-    }
-    else if (admchoice == 3) {
-        cout << "\n--- ADD RECEPTIONISTS ---\n";
-        createreceptionist(repo);
-
-    }
-    else if (admchoice == 4) {
-        cout << "\n--- ADD PHOTOGRAPHER ---\n";
-        createphotographer(repo);
-    }
-    else if (admchoice == 5) {
-        cout << "\n--- ADD CONSUMABLE ---\n";
-        createConsumable(repo);
-    }
-    else if (admchoice == 6) {
-        string param;
-        cout << "\n--- REMOVE CONSUMABLE ---\n";
-        cout << "Enter consumable name: \n";
-        cin >> param;
-        removeConsumable(repo, param);
-    }
-    else {
-        cout << "Invalid choice.\n";
-    }
 }

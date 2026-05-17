@@ -1,16 +1,12 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include <ctime>
-#include <limits>
-#include <memory>
-#include <UI.h>
+#include <QApplication>
+#include "mainwindow.h"
 
 using namespace std;
 
-int main() {
-UI ui;
-ui.run();
-
-    return 0;
+int main(int argc, char *argv[]) {
+    QApplication app(argc, argv);
+    MainWindow window;
+	window.resize(600, 400);
+    window.show();
+    return app.exec();
 }

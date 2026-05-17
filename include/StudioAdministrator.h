@@ -27,13 +27,12 @@ void sort(std::vector<std::shared_ptr<Consumables>> consumables);
 Photographer findPhotographer(std::map<int, std::shared_ptr<Photographer>> photographers, int keyval);
 void recordreceptionist(std::shared_ptr<Repo> repo, std::shared_ptr<Receptionist> receptionist);
 Receptionist findReceptionist(std::map<int, std::shared_ptr<Receptionist>> receptionists, int keyval);
-void createphotographer(std::shared_ptr<Repo> repo);
-void createreceptionist(std::shared_ptr<Repo> repo);
+void createphotographer(std::shared_ptr<Repo> repo, string name, string surname);
+void createreceptionist(std::shared_ptr<Repo> repo, string name, string surname);
 void printReceptionistInfo(std::shared_ptr<Repo> repo, int id);
 void printPhotographerInfo(std::shared_ptr<Repo> repo, int id);
-void createConsumable(std::shared_ptr<Repo> repo);
+void createConsumable(std::shared_ptr<Repo> repo, string name, int quantity, int price);
 void addConsumable(std::shared_ptr<Repo> repo, std::shared_ptr<Consumables> consumable);
 void removeConsumable(std::shared_ptr<Repo> repo, string consumablename);
-void adminChoicehandler(std::shared_ptr<Repo> repo, int admchoice);
 };
 #endif

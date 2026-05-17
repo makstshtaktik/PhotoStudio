@@ -45,36 +45,13 @@ string Photographer::toString() {
     return "Name: " + name + " " + "Surname: " + surname;
 }
 
-void Photographer::PhotographerHandler(std::shared_ptr<Repo> repo, int phchoice) {
+bool Photographer::completeOrder(std::shared_ptr<Repo> repo, int orderId) {
     std::lock_guard<std::mutex> lock(repo->repoMutex);
-    
-    if (phchoice == 1) {
-        cout << "\n--- ASSIGNED ORDERS ---\n";
-        if (repo->orders.empty()) {
-            cout << "No orders assigned.\n";
-            return;
-        }
-        for (auto& o : repo->orders) {
-            cout << "ID: " << o.first << " | " << o.second->toString() << endl;
-        }
-    }
-    else if (phchoice == 2) {
-        int id;
-        cout << "Enter Order ID to finish: ";
-        if (!(cin >> id)) {
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "Invalid ID format.\n";
-            return;
-        }
 
-        auto it = repo->orders.find(id);
-        if (it != repo->orders.end() && it->second != nullptr) {
-            it->second->isFinished = true;
-            cout << "Order #" << id << " marked as completed.\n";
-        }
-        else {
-            cout << "Order ID " << id << " not found.\n";
-        }
+    auto it = repo->orders.find(orderId);
+    if (it != repo->orders.end() && it->second != nullptr) {
+        it->second->isFinished = true;
+        return true;
     }
+    return false;
 }
