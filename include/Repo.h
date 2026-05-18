@@ -44,7 +44,7 @@ public:
     std::map<int, std::shared_ptr<Order>> orders;
     std::map<int, std::shared_ptr<Client>> clients;
 std::vector<std::shared_ptr<Consumables>> consumables;
-std::vector<std::shared_ptr<Report>> reports;
+std::map<int, std::shared_ptr<Report>> reports;
 std::map<int, std::shared_ptr<Transaction>> transactions;
 std::map<int, std::shared_ptr<Photographer>> photographers;
 std::map<int, std::shared_ptr<Receptionist>> receptionists;

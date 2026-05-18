@@ -160,15 +160,37 @@ void Repo::loadTransactions() {
 }
 void Repo::loadReports() {
     std::ifstream in(reportFile);
+    if (!in.is_open()) return;
+
     std::string line;
     while (std::getline(in, line)) {
-        std::stringstream ss(line);
-        std::string idStr, desc;
-        std::getline(ss, idStr, '|');
-        std::getline(ss, desc, '|');
-        int id = std::stoi(idStr);
-        reports.push_back(std::make_shared<Report>(id, desc));
-        if (id >= counterrp) counterrp = id + 1;
+        if (line.empty()) continue;
+        try {
+            std::stringstream ss(line);
+            std::string idStr, desc;
+            if (!std::getline(ss, idStr, '|') || !std::getline(ss, desc, '|'))
+                continue;
+
+            int id = std::stoi(idStr);
+            reports[id] = std::make_shared<Report>(id, desc);
+
+            if (id >= counterrp) counterrp = id + 1;
+        }
+        catch (...) {
+            continue;
+        }
+    }
+}
+
+void Repo::saveReport(std::shared_ptr<Report> r) {
+    std::lock_guard<std::mutex> lock(repoMutex);
+    std::ofstream out(reportFile, std::ios::app);
+
+    if (out.is_open()) {
+        r->setReportId(counterrp);
+        out << counterrp << "|" << r->getDescription() << "\n";
+        reports[counterrp] = r;
+        counterrp++;
     }
 }
 
@@ -270,18 +292,6 @@ void Repo::saveReceptionist(std::shared_ptr<Receptionist> r) {
         out << counterrec << "|" << r->getName() << "|" << r->getSurname() << "\n";
         receptionists[counterrec] = r;
         counterrec++;
-    }
-}
-
-void Repo::saveReport(std::shared_ptr<Report> r) {
-    std::lock_guard<std::mutex> lock(repoMutex);
-    std::ofstream out(reportFile, std::ios::app);
-    if (out.is_open()) {
-        out << r->getReportId() << "|" << r->getDescription() << "\n";
-        reports.push_back(r);
-        if (r->getReportId() >= counterrp) {
-            counterrp = r->getReportId() + 1;
-        }
     }
 }
 

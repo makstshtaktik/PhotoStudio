@@ -522,10 +522,8 @@ void MainWindow::handleClientRegistration() {
 
 void MainWindow::populateAdminReportsList() {
     adminReportList->clear();
-
     std::lock_guard<std::mutex> lock(repo->repoMutex);
-
-    for (auto const& reportItem : repo->reports) {
+    for (auto const& [id, reportItem] : repo->reports) {
         if (reportItem) {
             QString itemText = QString("Report ID: %1 | Details: %2")
                 .arg(static_cast<int>(reportItem->getReportId()))
@@ -541,12 +539,13 @@ void MainWindow::handleAdminCreateReport() {
         QMessageBox::warning(this, "Empty Payload", "Please fill out description summaries before archiving data log entries.");
         return;
     }
-
-    int trackingId = repo->counterrp;
+    int trackingId = 0;
+    {
+        std::lock_guard<std::mutex> lock(repo->repoMutex);
+        trackingId = repo->counterrp;
+    }
     auto newReport = std::make_shared<Report>(trackingId, description.toStdString());
-
     repo->saveReport(newReport);
-
     adminInputReportDesc->clear();
     populateAdminReportsList();
     QMessageBox::information(this, "System Logged", "Performance report compiled and synchronized successfully.");
