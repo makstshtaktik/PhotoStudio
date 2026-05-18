@@ -15,13 +15,6 @@ void StudioAdministrator::account(std::vector<std::shared_ptr<Consumables>> cons
     }
 }
 
-void StudioAdministrator::recordphotographer(std::shared_ptr<Repo> repo, std::shared_ptr<Photographer> photographer)
-{
-    std::lock_guard<std::mutex> lock(repo->repoMutex);
-    repo->photographers[repo->counterph] = photographer;
-    repo->counterph++;
-}
-
 string StudioAdministrator::toString()
 {
     return "Name: " + name + " " + " Surname: " + surname;
@@ -52,9 +45,12 @@ Photographer StudioAdministrator::findPhotographer(std::map<int, std::shared_ptr
 
 void StudioAdministrator::recordreceptionist(std::shared_ptr<Repo> repo, std::shared_ptr<Receptionist> receptionist)
 {
-    std::lock_guard<std::mutex> lock(repo->repoMutex);
-    repo->receptionists[repo->counterrp] = receptionist;
-    repo->counterrp++;
+    repo->saveReceptionist(receptionist);
+}
+
+void StudioAdministrator::recordphotographer(std::shared_ptr<Repo> repo, std::shared_ptr<Photographer> photographer)
+{
+    repo->savePhotographer(photographer);
 }
 
 Receptionist StudioAdministrator::findReceptionist(std::map<int, std::shared_ptr<Receptionist>> receptionists, int keyval)

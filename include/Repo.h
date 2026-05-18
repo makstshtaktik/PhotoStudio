@@ -39,7 +39,7 @@ public:
     int countertr = 0;
     int counterph = 0;
     int counterrp = 0;
-    int counterrec = 1;
+    int counterrec = 0;
 
     std::map<int, std::shared_ptr<Order>> orders;
     std::map<int, std::shared_ptr<Client>> clients;

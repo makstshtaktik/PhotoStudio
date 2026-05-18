@@ -11,6 +11,8 @@
 #include <QListWidget>
 #include <QLineEdit>
 #include <QComboBox>
+#include <qgroupbox.h>
+#include <QMessageBox>
 #include <memory>
 #include <mutex>
 

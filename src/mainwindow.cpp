@@ -1,6 +1,4 @@
 #include "mainwindow.h"
-#include <qgroupbox.h>
-#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 	repo = std::make_shared<Repo>();
@@ -159,7 +157,7 @@ void MainWindow::createReportViewSection(QVBoxLayout* parentLayout) {
     parentLayout->addWidget(new QLabel("<h4>Studio Performance Reports Ledger</h4>"));
 
     adminReportList = new QListWidget(adminPage);
-    adminReportList->setMaximumHeight(120); // Keep it compact and neat
+    adminReportList->setMaximumHeight(120);
     parentLayout->addWidget(adminReportList);
 
     QHBoxLayout* reportGenLayout = new QHBoxLayout();
