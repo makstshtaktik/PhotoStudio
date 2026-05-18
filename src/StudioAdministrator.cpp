@@ -96,15 +96,7 @@ void StudioAdministrator::createConsumable(std::shared_ptr<Repo> repo, string na
 {
     std::lock_guard<std::mutex> lock(repo->repoMutex);
     std::shared_ptr<Consumables> c = make_shared<Consumables>(Consumables(name, quantity, price));
-    addConsumable(repo, c);
-}
-
-
-
-void StudioAdministrator::addConsumable(std::shared_ptr<Repo> repo, std::shared_ptr<Consumables> consumable)
-{
-    std::lock_guard<std::mutex> lock(repo->repoMutex);
-    repo->consumables.push_back(consumable);
+    repo->consumables.push_back(c);
 }
 
 void StudioAdministrator::removeConsumable(std::shared_ptr<Repo> repo, string consumablename)

@@ -15,21 +15,27 @@ Receptionist::Receptionist(string name, string surname): name(name), surname(sur
 }
 
 void Receptionist::recordOrder(std::shared_ptr<Repo> repo, std::shared_ptr<Order> order) {
-    std::lock_guard<std::mutex> lock(repo->repoMutex);
-    repo->orders[repo->counter] = order;
-    repo->counter++;
+    {
+        std::lock_guard<std::mutex> lock(repo->repoMutex);
+        repo->orders[repo->counter] = order;
+        repo->counter++;
+    }
 }
 
 void Receptionist::recordClient(std::shared_ptr<Repo> repo, std::shared_ptr<Client> client) {
-    std::lock_guard<std::mutex> lock(repo->repoMutex);
-    repo->clients[repo->countercl] = client;
-    repo->countercl++;
+    {
+        std::lock_guard<std::mutex> lock(repo->repoMutex);
+        repo->clients[repo->countercl] = client;
+        repo->countercl++;
+    }
 }
 
 void Receptionist::recordTransaction(std::shared_ptr<Repo> repo, std::shared_ptr<Transaction> transaction) {
-    std::lock_guard<std::mutex> lock(repo->repoMutex);
-    repo->transactions[repo->countertr] = transaction;
-    repo->countertr++;
+    {
+        std::lock_guard<std::mutex> lock(repo->repoMutex);
+        repo->transactions[repo->countertr] = transaction;
+        repo->countertr++;
+    }
 }
 
 string Receptionist::toString()

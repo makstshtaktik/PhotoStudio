@@ -13,7 +13,7 @@ Consumables::Consumables(string name, int quantity, int price): name(name), quan
 }
 
 string Consumables::toString(){
-	return "Consumable: " + name + "of quantity: " + std::to_string(quantity);
+	return "Consumable: " + name + " of quantity: " + std::to_string(quantity);
 }
 
 string Consumables::getName()

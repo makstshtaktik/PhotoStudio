@@ -32,7 +32,6 @@ void createreceptionist(std::shared_ptr<Repo> repo, string name, string surname)
 void printReceptionistInfo(std::shared_ptr<Repo> repo, int id);
 void printPhotographerInfo(std::shared_ptr<Repo> repo, int id);
 void createConsumable(std::shared_ptr<Repo> repo, string name, int quantity, int price);
-void addConsumable(std::shared_ptr<Repo> repo, std::shared_ptr<Consumables> consumable);
 void removeConsumable(std::shared_ptr<Repo> repo, string consumablename);
 };
 #endif
